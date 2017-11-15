@@ -48,7 +48,7 @@ Create Table Feedback (
     Product Integer Not Null,
     Seller varchar(150),
     f_content Text(500),
-    f_score Integer check (0 <= score <= 10),
+    f_score Integer check (0 <= f_score <= 10),
     f_date Date,
     unique (FeedbackUser, Product),
     primary key (f_id),
@@ -67,8 +67,9 @@ Create Table Rating (
     Unique (RatingUser, Feedback),
     primary key (r_id),
     foreign key (RatingUser) references auth_user(username),
+    foreign key (Feedback_id) references Feedback (f_id),
     foreign key (FeedbackUser, FeedbackProduct) references Feedback (FeedbackUser, Product),
-    Check (RaringUser != FeedbackUser));
+    Check (RaringUser <> FeedbackUser));
     
 
     
