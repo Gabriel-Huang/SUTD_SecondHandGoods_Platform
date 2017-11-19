@@ -8,13 +8,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Bootstrap theme</a>
+      <a class="navbar-brand" href="#">SUTD 2nd Hand Trading</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
           {% url 'home' as home %}
-          {% url 'about' as about %}
-          {% url 'contact' as contact %}
         <li {% if request.path == home %} class = "active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -28,6 +26,12 @@
             <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
+        {% if user.is_authenticated %}
+        <li><a href="/accounts/profile/">Hi, {{ user.get_username }}!</a></li>
+        <li><a href="/accounts/signout/">Logout</a></li>
+        {% else %}
+        <li><a href="/accounts/signin">Login</a></li>
+      {% endif %}
       </ul>
     </div><!--/.nav-collapse -->
   </div>
