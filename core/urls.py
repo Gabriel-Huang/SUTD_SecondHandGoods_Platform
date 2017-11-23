@@ -16,11 +16,17 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
-
-
 from homepage import views as home_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home_views.home, name='home'),
     url(r'^accounts/', include('register.urls')),
+    url(r'^products/', include('products.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_URL)
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_URL)

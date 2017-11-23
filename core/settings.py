@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'homepage',
     'register',
+    'products',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 # if DEBUG:
 #     MEDIA_URL = '/media/'
 #     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static","static-only")

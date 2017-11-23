@@ -7,9 +7,8 @@ from django.db import connection
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from django.db import connection
 
 # Create your views here.
 def register(request):
@@ -47,7 +46,6 @@ def signout(request):
 def profile(request):
     user = request.user
     template = 'profile.html'
-    print user
     with connection.cursor() as cursor:
         cursor.execute("SELECT p_name FROM Product WHERE sellerid = %s", [user])
         row = cursor.fetchall()
