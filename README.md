@@ -16,9 +16,9 @@ sudo apt-get install libmysqlclient-dev
 ```
 virtualenv $environment_name
 ```
-source the virtual environment by
+activate the virtual environment by
 ```
-activate path/to/env/folder/bin/activate
+source path/to/env/folder/bin/activate
 ```
 and go to your project directory and do
 ```
