@@ -10,8 +10,81 @@
 {% endblock %}
 
 {% block jumbotron %}
-<div class="jumbotron">
-  <h1>Here is your product</h1>
-  <p>{{product_list}}</p>
-</div>
+    <div class="jumbotron">
+      <h1>Here is your product</h1>
+      <p>{{product_list}}</p>
+    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Purchase Record</h3>
+                    <hr>
+                </div><!-- /col-sm-12 -->
+            </div><!-- /row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Selling Record</h3>
+                    <hr>
+                </div><!-- /col-sm-12 -->
+            </div><!-- /row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Comments</h3>
+                    <hr>
+                </div><!-- /col-sm-12 -->
+            </div><!-- /row -->
+
+            {% for comment in comment_list %}
+
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="thumbnail">
+                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </div><!-- /thumbnail -->
+                </div><!-- /col-sm-1 -->
+
+                <div class="col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>{{ comment.FeedbackUser }}</strong> <span class="text-muted">commented {{ comment.date_ago }} days ago</span>
+                        </div>
+                        <div class="panel-body">
+                            {{ comment.f_content }}
+                        </div><!-- /panel-body -->
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <p>Average Rating: 0</p>
+                                </div>
+                                <div class="col-sm-7" align="right">
+                                    <div id="rateYo{{ comment.f_id }}"></div>
+                                    <script>
+                                        $(function () {
+                                            var starrate = $("#rateYo{{ comment.f_id }}");
+                                            starrate = starrate.rateYo({
+                                                starWidth: "20px",
+                                                fullStar: true,
+                                            });
+                                            starrate.rateYo().on("rateyo.set", function (e, data) {
+                                                starrate.rateYo("option", "readOnly", true);
+                                                $.post(window.location.href, {rate: data['rating'],
+                                                    feedback_user:"{{ user.get_username }}",
+                                                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                                                    product: '{{ comment.Product }}',
+                                                    Feedback_id: '{{ comment.f_id }}'});
+                                            });
+                                        })
+                                    </script>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div><!-- /panel panel-default -->
+                </div><!-- /col-sm-8 -->
+            </div><!-- /row -->
+
+            {% endfor %}
+
+        </div><!-- /container -->
 {% endblock %}

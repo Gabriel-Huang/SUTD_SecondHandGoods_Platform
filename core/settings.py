@@ -76,26 +76,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'platform',
-        'USER': 'jiahui',
-        'PASSWORD': 'Wehjhtc123.',
-        'HOST':'',
-        'PORT':'',
-    }
-}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'platform',
-#         'USER': 'gilbert',
-#         'PASSWORD': '',
+#         'USER': 'jiahui',
+#         'PASSWORD': 'Wehjhtc123.',
 #         'HOST':'',
 #         'PORT':'',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'platform',
+        'USER': 'gilbert',
+        'PASSWORD': '',
+        'HOST':'',
+        'PORT':'',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
