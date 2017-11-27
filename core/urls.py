@@ -16,15 +16,19 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
-from homepage import views as home_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home_views.home, name='home'),
     url(r'^accounts/', include('register.urls')),
     url(r'^products/', include('products.urls')),
+    url(r'^homepage/', include('homepage.urls')),
+]
+
+urlpatterns += [
+    url(r'^$', RedirectView.as_view(url='/homepage/', permanent=True), name='home'),
 ]
 
 if settings.DEBUG:

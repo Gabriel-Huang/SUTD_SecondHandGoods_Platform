@@ -51,6 +51,26 @@
             </a>
         </div>
     </div>
+
+    <div class="col-md-4">
+        <h3>Popular Seller</h3>
+        <hr>
+        {% if popular_seller %}
+        <ul>
+            {% for user in popular_seller %}
+                <li>
+                    <a href="{{ user.get_absolute_url }}">{{ user.username }}</a> ({{book.author}})
+                </li>
+                <h4>{{ user.username }}</h4>
+                <hr>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <h4>No Data Returned</h4>
+        {% endif %}
+
+
+    </div>
 {% endblock %}
 
 {% block list %}

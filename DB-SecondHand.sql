@@ -60,23 +60,13 @@ Create Table Rating (
     RatingUser varchar(150),
     FeedbackUser varchar(150),
     FeedbackProduct Integer Not Null,
-    Unique (RatingUser, Feedback),
+    Feedback_id Integer,
+    Unique (RatingUser, Feedback_id),
     primary key (r_id),
     foreign key (RatingUser) references auth_user(username),
     foreign key (Feedback_id) references Feedback (f_id),
     foreign key (FeedbackUser, FeedbackProduct) references Feedback (FeedbackUser, Product),
-    Check (RaringUser <> FeedbackUser));
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    Check (RaringUser <> FeedbackUser)); 
     
     
     
