@@ -34,6 +34,14 @@ def home(request):
 
 @login_required
 def user_view(request, pk):
+    if request.method == 'POST':
+        rate = request.POST.get("rate", "")
+        feedback_user = request.POST.get("feedback_user", "")
+        product = request.POST.get("product", "")
+        Feedback_id = request.POST.get("Feedback_id", "")
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO Rating VALUES (1, %s, %s, %s, 'gil1', %s, %s)",
+                           [rate, datetime.datetime.now().date(), feedback_user, product, Feedback_id])
     template = 'profile_other.html'
     with connection.cursor() as cursor:
         cursor.execute("SELECT p_name FROM Product WHERE sellerid = %s", [pk])

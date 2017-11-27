@@ -29,13 +29,20 @@ values
 Create Table OrderRecord (
 	o_id Integer,
     productid integer Not Null,
-    productseller integer Not Null,
+    productseller varchar(150),
     o_quantity integer,
     buyerid varchar (150),
     o_date Date,
     primary key (o_id),
     foreign key (productid, productseller) references Product(p_id, sellerid),
     foreign key (buyerid) references auth_user(username));
+
+
+alter table OrderRecord add column tradeinfo text;
+alter table OrderRecord add column trade_result int;
+insert into OrderRecord (o_id, productid)
+values (1, 0);
+
     
     
 Create Table Feedback (

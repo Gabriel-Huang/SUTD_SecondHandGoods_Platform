@@ -8,4 +8,5 @@ urlpatterns = [
     # url(r'^order/$', views.order, name='order'),
     url(r'^detials/(?P<pk>\d+)$', views.detials, name='detials'),
     url(r'^order/(?P<pk>\d+)$', views.order, name='order'),
+    url(r'^conformation/(?P<pk>\d+)$', views.conformation, name='order'),
 ]
