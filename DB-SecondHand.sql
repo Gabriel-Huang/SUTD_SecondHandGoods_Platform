@@ -6,29 +6,25 @@ use platform;
 --     email Text(50),
 --     user_pic_link Char(50),
 -- 	primary key (u_id));-- 
-
-Create Table Product (
+alter table Product add column category text;
+alter table Product add column price float;
+alter table Product modify column p_date DATETIME;
+select * from Product;
+Create Table Product ( 	#added column category
 	p_id Integer,
     sellerid varchar(150),
     sellername Char(20),
     p_name Char(100),
     p_quantity Integer, 
     p_description Text(500),
-    p_date Date,  # auto assign current date
+    p_date Date,  # modified to DATETIME
     product_pic_link Text(100),
     primary key (p_id, sellerid),
     foreign key (sellerid) references auth_user(username));
+insert into Product (p_id, sellerid, sellername, p_name, p_quantity, p_description, p_date, product_pic_link)
+values 
+(1, 'jiahui','jiahui','Iphone 11', 1, 'this is expensive', '2017-11-17','auiwg7^*%^jasg');
 
-Create Table Category (
-	c_id Integer primary key,
-    c_name Char(20));
-
-Create Table HasCategory (
-	p_id Integer,
-    c_id Integer,
-    primary key (p_id, c_id),
-    foreign key (p_id) references Product(p_id),
-    foreign key (c_id) references Category(c_id));
 
 Create Table OrderRecord (
 	o_id Integer,
