@@ -72,3 +72,12 @@
 
     </div>
 {% endblock %}
+
+{% block list %}
+    {% for product in products %}
+        <li>
+            <a href="{{ product.url }}">{{ product.p_name }}</a>
+        </li>
+        <img src="{{ product.pic_link }}" />
+    {% endfor %}
+{% endblock %}

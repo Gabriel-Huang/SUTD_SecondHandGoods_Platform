@@ -10,18 +10,38 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
+    products = []
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT p_id, p_name, product_pic_link FROM Product order by p_id limit 2")
+        row = cursor.fetchall()
+    for i in range(len(row)):
+        dic = {}
+        url = '/products/detials/%s'%row[i][0]
+        dic['url'] = url
+        dic['p_name'] = row[i][1]
+        dic['pic_link'] = row[i][2]
+        products.append(dic)
+
     template = 'home.html'
     with connection.cursor() as cursor:
         cursor.execute("SELECT username FROM auth_user")
         popular_seller = dictfetchall(cursor)
     for user in popular_seller:
         user['get_absolute_url'] = reverse('user-view', args=[str(user['username'])])
-    context = {"popular_seller": popular_seller}
+    context = {"popular_seller": popular_seller, "products": products}
     return render(request, template, context)
 
 
 @login_required
 def user_view(request, pk):
+    if request.method == 'POST':
+        rate = request.POST.get("rate", "")
+        feedback_user = request.POST.get("feedback_user", "")
+        product = request.POST.get("product", "")
+        Feedback_id = request.POST.get("Feedback_id", "")
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO Rating VALUES (1, %s, %s, %s, 'gil1', %s, %s)",
+                           [rate, datetime.datetime.now().date(), feedback_user, product, Feedback_id])
     template = 'profile_other.html'
     with connection.cursor() as cursor:
         cursor.execute("SELECT p_name FROM Product WHERE sellerid = %s", [pk])
