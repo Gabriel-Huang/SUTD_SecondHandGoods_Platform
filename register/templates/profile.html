@@ -12,35 +12,18 @@
 {% block jumbotron %}
     <div class="jumbotron">
       <h1>Here is your product</h1>
-      {% for product in product_list %}
-        <li>{{product.p_name}}</li>
-      {% endfor %}
+      <p>{{product_list}}</p>
     </div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Purchase Record</h3>
-                    {% for record in order_record %}
-                        <p>{{record.p_name}}    seller: {{record.productseller}}   status: {{record.trade_result}}
-                        </p>
-                    {% endfor %}
                     <hr>
                 </div><!-- /col-sm-12 -->
             </div><!-- /row -->
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Selling Record</h3>
-                    {% for record in sell_record %}
-                        {% if record.trade_result == 1 %}
-                            <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Confirmed</strong>
-                        {% elif record.trade_result == 2 %}
-                            <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Declined</strong>
-                        {% else %}
-                            <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago
-                                <a href="{{ record.url }}"><strong>confirm</strong></a>
-                            </p>
-                        {% endif %}
-                    {% endfor %}
                     <hr>
                 </div><!-- /col-sm-12 -->
             </div><!-- /row -->

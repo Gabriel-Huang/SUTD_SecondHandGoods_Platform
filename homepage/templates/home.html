@@ -18,7 +18,13 @@
 {% endblock %}
 
 {% block content %}
-<h1>Wellcome to our online platform!!</h1>
+    <form method="get" action="/search/">
+        {% csrf_token %}
+        <input type="search" placeholder="search" name="q" required>
+        <button type="submit">search</button>
+    </form>
+
+<h1>Welcome to our online platform!!</h1>
     <div class="col-md-12">
         <div id="carousel-main" class="carousel slide " data-ride="carousel" data-interval="5000">
             <ol class="carousel-indicators">
@@ -71,13 +77,4 @@
 
 
     </div>
-{% endblock %}
-
-{% block list %}
-    {% for product in products %}
-        <li>
-            <a href="{{ product.url }}">{{ product.p_name }}</a>
-        </li>
-        <img src="{{ product.pic_link }}" />
-    {% endfor %}
 {% endblock %}
