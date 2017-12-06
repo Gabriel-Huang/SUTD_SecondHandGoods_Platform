@@ -9,3 +9,6 @@ from django import forms
 class signinForm(forms.Form):
     username = forms.CharField(required=False, max_length = 100)
     password = forms.CharField(widget=forms.PasswordInput)
+
+class commentForm(forms.Form):
+    comments = forms.CharField(required = True, max_length = 250, widget=forms.Textarea)

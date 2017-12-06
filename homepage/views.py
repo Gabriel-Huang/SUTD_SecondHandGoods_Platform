@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     products = []
     with connection.cursor() as cursor:
-        cursor.execute("SELECT p_id, p_name, product_pic_link FROM Product order by p_id limit 2")
+        cursor.execute("SELECT p_id, p_name, product_pic_link FROM Product order by p_id limit 5")
         row = cursor.fetchall()
     for i in range(len(row)):
         dic = {}
@@ -44,18 +44,24 @@ def user_view(request, pk):
                            [rate, datetime.datetime.now().date(), feedback_user, product, Feedback_id])
     template = 'profile_other.html'
     with connection.cursor() as cursor:
-        cursor.execute("SELECT p_name FROM Product WHERE sellerid = %s", [pk])
-        row = cursor.fetchall()
+        cursor.execute("SELECT p_name, p_id FROM Product WHERE sellerid = %s", [pk])
+        products = dictfetchall(cursor)
         cursor.execute("SELECT FeedbackUser, f_content, f_date, Product, f_id, p_name "
                        "FROM Feedback, Product "
                        "WHERE Seller = %s "
                        "AND Feedback.Product = Product.p_id",
                        [pk])
         comment_list = dictfetchall(cursor)
+
         for comment in comment_list:
             comment['date_ago'] = (datetime.datetime.now().date() - comment['f_date']).days
-    context = {'product_list': row,
-               'comment_list': comment_list}
+
+        for product in products:
+            product['detial'] = '/products/detials/%s' %product['p_id']
+    user = {'user': '''this is %s's public profile page'''%pk}
+    context = {'product_list': products,
+               'comment_list': comment_list,
+               'user': user}
     return render(request, template, context)
 
 def dictfetchall(cursor):

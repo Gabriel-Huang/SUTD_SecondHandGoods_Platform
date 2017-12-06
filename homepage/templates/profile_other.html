@@ -11,19 +11,20 @@
 
 {% block jumbotron %}
     <div class="jumbotron">
-      <h1>Here is your product</h1>
-      <p>{{product_list}}</p>
+      <h1>{{user.user}}</h1>
+
     </div>
         <div class="container">
+
             <div class="row">
                 <div class="col-sm-12">
-                    <h3>Purchase Record</h3>
-                    <hr>
-                </div><!-- /col-sm-12 -->
-            </div><!-- /row -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3>Selling Record</h3>
+                    <h3>Selling Products</h3>
+                    {% for product in product_list %}
+                        <p>
+                            {{product.p_name}}
+                            <a href="{{ product.detial }}"><strong>detials</strong></a>
+                        </p>
+                    {% endfor %}
                     <hr>
                 </div><!-- /col-sm-12 -->
             </div><!-- /row -->

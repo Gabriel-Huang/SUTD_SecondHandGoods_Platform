@@ -2,15 +2,14 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from .forms import signinForm
+from .forms import signinForm, commentForm
 from django.db import connection
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-
-import datetime
+from datetime import *
 
 # Create your views here.
 def register(request):
@@ -56,8 +55,8 @@ def profile(request):
                     FROM OrderRecord WHERE productseller = %s''', [user])
         sell_record = dictfetchall(cursor)
 
-        cursor.execute('''SELECT productseller, o_id, productid, o_quantity, buyerid, o_date, trade_result
-                    FROM OrderRecord WHERE buyerid = %s''', [user])
+        cursor.execute('''SELECT p_id, p_name, productseller, o_id, productid, o_quantity, buyerid, o_date, trade_result
+                    FROM OrderRecord, Product WHERE buyerid = %s and p_id = productid''', [user])
         order_record = dictfetchall(cursor)
 
         for record in sell_record:
@@ -69,12 +68,14 @@ def profile(request):
             quantity = int(product[0]['p_quantity'])
             record['result'] = record['trade_result']
             record['p_name'] = pname
-            record['date_ago'] = (datetime.datetime.now().date() - record['o_date']).days
+            record['date_ago'] = (datetime.now().date() - record['o_date']).days
             record['url'] = url
             if quantity < 1:
                 sell_record.remove(record)
 
         for record in order_record:
+
+            record['comment_url'] = '/accounts/comments/%s_pid_%s'%(record['productseller'], record['p_id'])
             if record['trade_result'] == 1:
                 record['trade_result'] = 'Succeed!'
             elif record['trade_result'] == 2:
@@ -89,12 +90,36 @@ def profile(request):
                        [user])
         comment_list = dictfetchall(cursor)
         for comment in comment_list:
-            comment['date_ago'] = (datetime.datetime.now().date() - comment['f_date']).days
+            comment['date_ago'] = (datetime.now().date() - comment['f_date']).days
     context = {'product_list': row,
                'comment_list': comment_list,
                'sell_record': sell_record,
                'order_record': order_record}
     return render(request, template, context)
+
+@login_required
+def comment(request, pk):
+    user = request.user
+    comment_on = pk.split('_pid_')[0]
+    product_id = pk.split('_pid_')[1]
+    template = 'comment.html'
+    if request.method == 'POST':
+        form = commentForm(request.POST)
+        if form.is_valid():
+            comment = form.cleaned_data.get('comments')
+            now = datetime.now().replace(microsecond=0)
+            with connection.cursor() as cursor:
+                cursor.execute('''SELECT f_id FROM Feedback ORDER BY f_id DESC LIMIT 1;''')
+                fid = int(cursor.fetchall()[0][0]) + 1
+                cursor.execute(
+                '''INSERT INTO Feedback
+                values (%s, %s, %s, %s, %s, %s, %s);  ''',
+                [fid, user, product_id, comment_on, comment, 0, now]
+                )
+            return redirect('home')
+    else:
+        form = commentForm()
+    return render(request, template, {'form': form})
 
 
 def dictfetchall(cursor):

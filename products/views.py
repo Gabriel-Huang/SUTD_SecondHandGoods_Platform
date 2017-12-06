@@ -20,7 +20,7 @@ def detials(request, pk):
     detials['order_url'] = '/products/order/%s'%pk
     detials['pic_link'] = row[2]
     seller = row[3]
-    user_url = '/accounts/profile/%s'%seller
+    user_url = '/homepage/user/%s'%seller
     detials['user_url'] = user_url
     detials['seller'] = seller
     detials['quantity'] = row[4]
@@ -78,7 +78,7 @@ def order(request, pk):
     detials['order_url'] = '/products/order/%s'%pk
     detials['pic_link'] = row[2]
     seller = row[3]
-    user_url = '/accounts/profile/%s'%seller
+    user_url = '/homepage/user/%s'%seller
     detials['user_url'] = user_url
     detials['seller'] = seller
     detials['quantity'] = row[4]

@@ -21,8 +21,14 @@
                 <div class="col-sm-12">
                     <h3>Purchase Record</h3>
                     {% for record in order_record %}
-                        <p>{{record.p_name}}    seller: {{record.productseller}}   status: {{record.trade_result}}
-                        </p>
+                        {% if record.trade_result == "Succeed!" %}
+                            <p>{{record.p_name}}    seller: {{record.productseller}}   status: {{record.trade_result}}
+                                <a href="{{ record.comment_url }}"><strong>comment on the seller!</strong></a>
+                            </p>
+                        {% else %}
+                            <p>{{record.p_name}}    seller: {{record.productseller}}   status: {{record.trade_result}}
+                            </p>
+                        {% endif %}
                     {% endfor %}
                     <hr>
                 </div><!-- /col-sm-12 -->

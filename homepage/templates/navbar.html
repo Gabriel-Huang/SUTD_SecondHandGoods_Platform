@@ -28,6 +28,7 @@
         </li>
         {% if user.is_authenticated %}
         <li><a href="/accounts/profile/">Hi, {{ user.get_username }}!</a></li>
+        <li><a href="/products/post/">Sell an item !</a></li>
         <li><a href="/accounts/signout/">Logout</a></li>
         {% else %}
         <li><a href="/accounts/login">Login</a></li>
