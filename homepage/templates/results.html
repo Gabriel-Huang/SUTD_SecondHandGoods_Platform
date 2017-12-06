@@ -1,13 +1,16 @@
-{% if error_msg %}
-    <p>{{ error_msg }}</p>
-{% endif %}
+{% extends 'base.html' %}
 
-{% for post in post_list %}
-  <div>
-    Show relative product information here
-  </div>
-{% empty %}
-  <div class="no-post">
-    No matched products
-  </div>
-{% endfor %}
+{% block content %}
+   {% if post_list %}
+   <h3>here is what we find</h3>
+    {% for post in post_list %}
+      <div>
+        Show relative product information here
+      </div>
+    {% endfor %}
+
+    {% else %}
+        <h3>No Matched Result</h3>
+    {% endif %}
+
+{% endblock %}

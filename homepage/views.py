@@ -21,6 +21,7 @@ def home(request):
 
 
 def search(request):
+
     q = request.GET.get('q')
     error_msg = ''
 
@@ -28,10 +29,14 @@ def search(request):
     # if not q:
     #     error_msg = 'Please type in keywords'
     #     return render(request, 'homepage/errors.html', {'error_msg': error_msg})
-
-    product_list = products.objects.raw("SELECT * FROM Product WHERE p_name REGEXP '%%s%' OR p_description REGEXP '%%s%'",
-                                        [q,q])
-    return render(request, 'homepage/results.html', {'error_msg': error_msg,
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM Product WHERE p_name REGEXP %s OR p_description REGEXP %s", [q, q])
+        product_list = dictfetchall(cursor)
+        if product_list:
+            print product_list
+        else:
+            print 'nonnnn'
+    return render(request, 'results.html', {'error_msg': error_msg,
                                                      'post_list': product_list})
 
 
