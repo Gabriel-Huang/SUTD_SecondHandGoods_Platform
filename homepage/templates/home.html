@@ -10,15 +10,14 @@
 </style>
 {% endblock %}
 
-{% block jumbotron %}
-<div class="jumbotron">
-  <h1>Jiahui is a nice guy</h1>
-  <p>Here should be recommended products</p>
-</div>
-{% endblock %}
 
 {% block content %}
-<h1>Wellcome to our online platform!!</h1>
+    <h1>Welcome to our online platform!!</h1>
+     <form class="search-bar" method="get" action="search/">
+        {% csrf_token %}
+         <input type="search" class="search-box rounded" placeholder="Search Anything You Want..." name="q" required><button type="submit" id="search-icon"><img src="{% static "images/search.png" %}" style="width: 40px;height: 40px"></button>
+     </form>
+
     <div class="col-md-12">
         <div id="carousel-main" class="carousel slide " data-ride="carousel" data-interval="5000">
             <ol class="carousel-indicators">

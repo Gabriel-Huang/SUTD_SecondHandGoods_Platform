@@ -20,6 +20,26 @@ def home(request):
     return render(request, template, context)
 
 
+def search(request):
+
+    q = request.GET.get('q')
+    error_msg = ''
+
+    # error.html needed！！！
+    # if not q:
+    #     error_msg = 'Please type in keywords'
+    #     return render(request, 'homepage/errors.html', {'error_msg': error_msg})
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM Product WHERE p_name REGEXP %s OR p_description REGEXP %s", [q, q])
+        product_list = dictfetchall(cursor)
+        if product_list:
+            print product_list
+        else:
+            print 'nonnnn'
+    return render(request, 'results.html', {'error_msg': error_msg,
+                                                     'post_list': product_list})
+
+
 @login_required
 def user_view(request, pk):
     template = 'profile_other.html'

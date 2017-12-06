@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   {% if post_list %}
+   <h3>here is what we find</h3>
+    {% for post in post_list %}
+      <div>
+        Show relative product information here
+      </div>
+    {% endfor %}
+
+    {% else %}
+        <h3>No Matched Result</h3>
+    {% endif %}
+
+{% endblock %}
