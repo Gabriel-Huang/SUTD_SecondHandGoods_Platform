@@ -44,10 +44,8 @@ def search(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM Product WHERE p_name REGEXP %s OR p_description REGEXP %s", [q, q])
         product_list = dictfetchall(cursor)
-        if product_list:
-            print product_list
-        else:
-            print 'nonnnn'
+    for product in product_list:
+        product['detail'] = '/products/detials/%s' %product['p_id']
     return render(request, 'results.html', {'error_msg': error_msg,
                                                      'post_list': product_list})
 

@@ -8,10 +8,10 @@
     {% for post in post_list %}
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img class="product-list-pic" src="{% static "/images/sample.jpg" %}" alt="WELCOME TO SUTD">
+              <img class="product-list-pic" src="{{ post.product_pic_link }}" alt="WELCOME TO SUTD">
               <p><strong>{{ post.p_name }}</strong></p>
               <p>Seller: {{ post.sellername }}</p>
-              <button class="btn" href="">Buy Now</button>
+              <button class="btn" href="{{ product.detail }}">Buy Now</button>
             </div>
           </div>
     {% endfor %}
