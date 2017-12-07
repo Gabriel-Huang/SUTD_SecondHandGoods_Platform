@@ -52,7 +52,6 @@ def search(request):
 
 @login_required
 def user_view(request, pk):
-    user = request.user
     if request.method == 'POST':
         rate = request.POST.get("rate", "")
         feedback_user = request.POST.get("feedback_user", "")
@@ -77,12 +76,11 @@ def user_view(request, pk):
 
         for product in products:
             product['detial'] = '/products/detials/%s' %product['p_id']
-    seller = {'seller': '''this is %s's public profile page'''%pk}
+    user = {'user': '''this is %s's public profile page'''%pk}
     context = {'product_list': products,
                'comment_list': comment_list,
-               'seller': seller}
+               'user': user}
     return render(request, template, context)
-
 
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
