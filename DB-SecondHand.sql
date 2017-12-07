@@ -12,7 +12,6 @@ select * from Product;
 Create Table Product ( 	#added column category
 	p_id Integer,
     sellerid varchar(150),
-    sellername Char(20),
     p_name Char(100),
     p_quantity Integer, 
     p_description Text(500),
