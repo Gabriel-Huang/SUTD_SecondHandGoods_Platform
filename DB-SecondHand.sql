@@ -74,7 +74,7 @@ Create Table Rating (
     foreign key (RatingUser) references auth_user(username),
     foreign key (Feedback_id) references Feedback (f_id),
     foreign key (FeedbackUser, FeedbackProduct) references Feedback (FeedbackUser, Product),
-    Check (RaringUser <> FeedbackUser)); 
+    Check (RatingUser <> FeedbackUser)); 
     
     
     
