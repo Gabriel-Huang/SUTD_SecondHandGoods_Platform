@@ -110,9 +110,10 @@ def comment(request, pk):
             now = datetime.now().replace(microsecond=0)
             with connection.cursor() as cursor:
                 cursor.execute('''SELECT f_id FROM Feedback ORDER BY f_id DESC LIMIT 1;''')
+                
                 row = cursor.fetchall()
 
-                if row[0] == null:
+                if row[0] == ():
                     cursor.execute(
                     '''INSERT INTO Feedback
                     values (%s, %s, %s, %s, %s, %s, %s);  ''',
