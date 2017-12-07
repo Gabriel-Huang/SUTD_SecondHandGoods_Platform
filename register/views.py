@@ -110,12 +110,22 @@ def comment(request, pk):
             now = datetime.now().replace(microsecond=0)
             with connection.cursor() as cursor:
                 cursor.execute('''SELECT f_id FROM Feedback ORDER BY f_id DESC LIMIT 1;''')
-                fid = int(cursor.fetchall()[0][0]) + 1
-                cursor.execute(
-                '''INSERT INTO Feedback
-                values (%s, %s, %s, %s, %s, %s, %s);  ''',
-                [fid, user, product_id, comment_on, comment, 0, now]
-                )
+                row = cursor.fetchall()
+
+                if row[0] == null:
+                    cursor.execute(
+                    '''INSERT INTO Feedback
+                    values (%s, %s, %s, %s, %s, %s, %s);  ''',
+                    [0, user, product_id, comment_on, comment, 0, now]
+                    )
+                else:
+                    fid = int(row[0][0]) + 1
+                    cursor.execute(
+                    '''INSERT INTO Feedback
+                    values (%s, %s, %s, %s, %s, %s, %s);  ''',
+                    [fid, user, product_id, comment_on, comment, 0, now]
+                    )
+
             return redirect('home')
     else:
         form = commentForm()
