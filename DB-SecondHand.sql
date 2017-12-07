@@ -17,8 +17,8 @@ Create Table Product ( 	#added column category
     p_quantity Integer, 
     p_description Text(500),
     p_date DATETIME,
-    product_pic_link Text(100),
-    category Text(100),
+    product_pic_link Text,
+    category Text,
     price float,
     primary key (p_id, sellerid),
     foreign key (sellerid) references auth_user(username));
@@ -30,6 +30,8 @@ values
 Create Table OrderRecord (
 	o_id Integer,
     productid integer Not Null,
+    tradeinfo Text,
+    trade_result integer,
     productseller varchar(150),
     o_quantity integer,
     buyerid varchar (150),
@@ -39,8 +41,6 @@ Create Table OrderRecord (
     foreign key (buyerid) references auth_user(username));
 
 
-alter table OrderRecord add column tradeinfo text;
-alter table OrderRecord add column trade_result int;
 insert into OrderRecord (o_id, productid)
 values (1, 0);
 
