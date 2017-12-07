@@ -21,46 +21,104 @@
                 <div class="col-sm-12">
                     <h3>Purchase Record</h3>
                     <hr>
-                    {% for record in order_record %}
+                    <ul class=list-group">
+                        {% for record in order_record %}
                         {% if record.trade_result == "Succeed!" %}
-                            <p>{{record.p_name}}    seller: {{record.productseller}}   status: {{record.trade_result}}
-                                <a href="{{ record.comment_url }}"><strong>comment on the seller!</strong></a>
-                            </p>
+                            <li class="list-group-item justify-content-between">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ record.product_pic_link }}" width="150px" height="100px">
+                                    </div>
+                                    <div class="col-md-3 no-float">
+                                        <h3><strong>{{record.p_name}}</strong></h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p><strong>seller: </strong>{{record.productseller}}</p>
+                                        <p><strong>status: </strong>{{record.trade_result}}</p>
+                                        <a href="{{ record.comment_url }}" class="btn" role="button"><strong>comment on the seller!</strong></a>
+                                    </div>
+                                </div>
+                            </li>
                         {% else %}
-                            <p>{{record.p_name}}    seller: {{record.productseller}}   status: {{record.trade_result}}
-                            </p>
+                            <li class="list-group-item justify-content-between">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ record.product_pic_link }}" width="150px" height="100px">
+                                    </div>
+                                    <div class="col-md-3 no-float">
+                                        <h3><strong>{{record.p_name}}</strong></h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p><strong>seller: </strong>{{record.productseller}}</p>
+                                        <p><strong>status: </strong>{{record.trade_result}}</p>
+                                    </div>
+                                </div>
+                            </li>
                         {% endif %}
                     {% endfor %}
+                    </ul>
                 </div><!-- /col-sm-12 -->
             </div><!-- /row -->
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Selling Record</h3>
                     <hr>
-                    <ul class=list-group">
-                        {% for record in sell_record %}
-                            {% if record.trade_result == 1 %}
-                                 <li class="list-group-item justify-content-between list-group-item-success">
-                                    <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Confirmed</strong>
-                                    <span class="badge badge-default badge-pill">1</span>
-                                 </li>
-                            {% elif record.trade_result == 2 %}
-                                <li class="list-group-item justify-content-between list-group-item-danger">
-                                    <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Declined</strong>
-                                    <span class="badge badge-default badge-pill">1</span>
-                                </li>
-                            {% else %}
-                                <li class="list-group-item justify-content-between list-group-item-info">
-                                    <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago
-                                        <a href="{{ record.url }}"><strong>confirm</strong></a>
-                                    </p>
-                                    <span class="badge badge-default badge-pill">1</span>
-                                </li>
-
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-
+                    {% for record in sell_record %}
+                        <ul class=list-group">
+                        {% if record.trade_result == 1 %}
+                            <li class="list-group-item justify-content-between list-group-item-success">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ record.product_pic_link }}" width="150px" height="100px">
+                                    </div>
+                                    <div class="col-md-3 no-float">
+                                        <h3><strong>{{record.p_name}}</strong></h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p><strong>buyer: </strong>{{record.buyerid}}</p>
+                                        <p>ordered {{record.date_ago}} days ago
+                                        <p><strong>Status: Confirmed</strong></p>
+                                        <span class="badge badge-default badge-pill">1</span>
+                                    </div>
+                                </div>
+                            </li>
+                        {% elif record.trade_result == 2 %}
+                            <li class="list-group-item justify-content-between list-group-item-danger">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ record.product_pic_link }}" width="150px" height="100px">
+                                    </div>
+                                    <div class="col-md-3 no-float">
+                                        <h3><strong>{{record.p_name}}</strong></h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p><strong>buyer: </strong>{{record.buyerid}}</p>
+                                        <p>ordered {{record.date_ago}} days ago
+                                        <p><strong>Status: Declined</strong></p>
+                                        <span class="badge badge-default badge-pill">1</span>
+                                    </div>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="list-group-item justify-content-between list-group-item-info">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ record.product_pic_link }}" width="150px" height="100px">
+                                    </div>
+                                    <div class="col-md-3 no-float">
+                                        <h3><strong>{{record.p_name}}</strong></h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p><strong>buyer: </strong>{{record.buyerid}}</p>
+                                        <p>ordered {{record.date_ago}} days ago
+                                        <p><a href="{{ record.url }}"><strong>confirm</strong></a></p>
+                                        <span class="badge badge-default badge-pill">1</span>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    {% endfor %}
                 </div><!-- /col-sm-12 -->
             </div><!-- /row -->
             <div class="row">
@@ -92,28 +150,6 @@
                                 <div class="col-sm-5">
                                     <p>Average Rating: 0</p>
                                 </div>
-                                <div class="col-sm-7" align="right">
-                                    <div id="rateYo{{ comment.f_id }}"></div>
-                                    <script>
-                                        $(function () {
-                                            var starrate = $("#rateYo{{ comment.f_id }}");
-                                            starrate = starrate.rateYo({
-                                                starWidth: "20px",
-                                                fullStar: true,
-                                            });
-                                            starrate.rateYo().on("rateyo.set", function (e, data) {
-                                                starrate.rateYo("option", "readOnly", true);
-                                                $.post(window.location.href, {rate: data['rating'],
-                                                    feedback_user:"{{ user.get_username }}",
-                                                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                                                    product: '{{ comment.Product }}',
-                                                    Feedback_id: '{{ comment.f_id }}'});
-                                            });
-                                        })
-                                    </script>
-                                </div>
-
-
                             </div>
                         </div>
                     </div><!-- /panel panel-default -->

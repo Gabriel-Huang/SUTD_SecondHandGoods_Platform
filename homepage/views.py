@@ -7,7 +7,6 @@ from django.db import connection
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-
 # Create your views here.
 def home(request):
     products = []
@@ -40,6 +39,9 @@ def search(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM Product WHERE p_name REGEXP %s OR p_description REGEXP %s", [q, q])
         product_list = dictfetchall(cursor)
+        if request.user.is_authenticated():
+            cursor.execute("INSERT INTO Search_Record VALUES (%s, %s, %s)",
+                           [request.user, q, '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())])
     for product in product_list:
         product['detail'] = '/products/detials/%s' %product['p_id']
     return render(request, 'results.html', {'error_msg': error_msg,
