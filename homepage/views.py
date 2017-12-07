@@ -2,9 +2,6 @@
 from __future__ import unicode_literals
 
 import datetime
-from django.contrib.auth import authenticate, logout
-from django.contrib.auth import login as auth_login
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.db import connection
 from django.urls import reverse
@@ -33,6 +30,24 @@ def home(request):
         user['get_absolute_url'] = reverse('user-view', args=[str(user['username'])])
     context = {"popular_seller": popular_seller, "products": products}
     return render(request, template, context)
+
+
+def search(request):
+
+    q = request.GET.get('q')
+    error_msg = ''
+
+    # error.html needed！！！
+    # if not q:
+    #     error_msg = 'Please type in keywords'
+    #     return render(request, 'homepage/errors.html', {'error_msg': error_msg})
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM Product WHERE p_name REGEXP %s OR p_description REGEXP %s", [q, q])
+        product_list = dictfetchall(cursor)
+    for product in product_list:
+        product['detail'] = '/products/detials/%s' %product['p_id']
+    return render(request, 'results.html', {'error_msg': error_msg,
+                                                     'post_list': product_list})
 
 
 @login_required

@@ -35,11 +35,9 @@
       <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 
-
   </head>
 
   <body>
-    {% include 'navbar.html' %}
 
         <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -49,8 +47,9 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="{% static 'javascript/docs.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-    <script src="{% static "javascript/main.js" %}"></script>
+    <script src="{% static "javascript/main.js" %}"></script>]
 
+    {% include 'navbar.html' %}
     <div class="container theme-showcase" role="main">
 
     {% block jumbotron %}
@@ -59,15 +58,12 @@
     {% block content %}
     {% endblock %}
 
-    {% block list %}
-    {% endblock %}
-
     {% block styles %}
     {% endblock %}
 
+
     </div> <!-- /container -->
-
-
+    {% include 'footer.html' %}
 
   </body>
 </html>
