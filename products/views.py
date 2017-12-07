@@ -52,11 +52,20 @@ def post(request):
             now = datetime.now().replace(microsecond=0)
             with connection.cursor() as cursor:
                 cursor.execute('''SELECT p_id FROM Product ORDER BY p_id DESC LIMIT 1;''')
-                pid = int(cursor.fetchall()[0][0]) + 1
-                cursor.execute('''INSERT INTO Product (p_id, sellerid, sellername,
-                p_name, p_quantity, p_description, p_date, product_pic_link, category, price) values
-                (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (pid, user, '',
-                productname, quantity, discription, now, uploaded_file_url, category, price))
+                row = cursor.fetchall()
+
+                if row == ():
+                    cursor.execute('''INSERT INTO Product (p_id, sellerid, sellername,
+                    p_name, p_quantity, p_description, p_date, product_pic_link, category, price) values
+                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (0, user, '',
+                    productname, quantity, discription, now, uploaded_file_url, category, price))
+
+                else:
+                    pid = int(row) + 1
+                    cursor.execute('''INSERT INTO Product (p_id, sellerid, sellername,
+                    p_name, p_quantity, p_description, p_date, product_pic_link, category, price) values
+                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (pid, user, '',
+                    productname, quantity, discription, now, uploaded_file_url, category, price))
             return render(request, 'post.html', {
                         'uploaded_file_url': uploaded_file_url})
 
@@ -93,13 +102,26 @@ def order(request, pk):
             message = form.cleaned_data.get('message')
             quantity = int(form.cleaned_data.get('quantity'))
             now = datetime.now().replace(microsecond=0)
+
             with connection.cursor() as cursor:
+
                 cursor.execute('''SELECT o_id FROM OrderRecord ORDER BY o_id DESC LIMIT 1;''')
-                oid = int(cursor.fetchall()[0][0]) + 1
-                cursor.execute('''INSERT INTO OrderRecord (o_id, productid, productseller,
-                o_quantity, buyerid, o_date, tradeinfo, trade_result) values
-                (%s, %s, %s, %s, %s, %s, %s, %s);''', (oid, pid, seller,
-                quantity, user, now, message, 0))
+
+                row = cursor.fetchall()
+                if row == ():
+                    cursor.execute('''INSERT INTO OrderRecord (o_id, productid, productseller,
+                    o_quantity, buyerid, o_date, tradeinfo, trade_result) values
+                    (%s, %s, %s, %s, %s, %s, %s, %s);''', (0, pid, seller,
+                    quantity, user, now, message, 0))
+
+                else:
+
+                    oid = int(row[0][0]) + 1
+                    cursor.execute('''INSERT INTO OrderRecord (o_id, productid, productseller,
+                    o_quantity, buyerid, o_date, tradeinfo, trade_result) values
+                    (%s, %s, %s, %s, %s, %s, %s, %s);''', (oid, pid, seller,
+                    quantity, user, now, message, 0))
+
             return render(request, 'order.html', success)
 
     else:
