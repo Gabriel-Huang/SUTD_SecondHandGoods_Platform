@@ -76,10 +76,10 @@ def user_view(request, pk):
 
         for product in products:
             product['detial'] = '/products/detials/%s' %product['p_id']
-    user = {'user': '''this is %s's public profile page'''%pk}
+    seller = {'seller': '''this is %s's public profile page'''%pk}
     context = {'product_list': products,
                'comment_list': comment_list,
-               'user': user}
+               'seller': seller}
     return render(request, template, context)
 
 def dictfetchall(cursor):
