@@ -20,6 +20,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Purchase Record</h3>
+                    <hr>
                     {% for record in order_record %}
                         {% if record.trade_result == "Succeed!" %}
                             <p>{{record.p_name}}    seller: {{record.productseller}}   status: {{record.trade_result}}
@@ -30,24 +31,36 @@
                             </p>
                         {% endif %}
                     {% endfor %}
-                    <hr>
                 </div><!-- /col-sm-12 -->
             </div><!-- /row -->
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Selling Record</h3>
-                    {% for record in sell_record %}
-                        {% if record.trade_result == 1 %}
-                            <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Confirmed</strong>
-                        {% elif record.trade_result == 2 %}
-                            <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Declined</strong>
-                        {% else %}
-                            <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago
-                                <a href="{{ record.url }}"><strong>confirm</strong></a>
-                            </p>
-                        {% endif %}
-                    {% endfor %}
                     <hr>
+                    <ul class=list-group">
+                        {% for record in sell_record %}
+                            {% if record.trade_result == 1 %}
+                                 <li class="list-group-item justify-content-between list-group-item-success">
+                                    <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Confirmed</strong>
+                                    <span class="badge badge-default badge-pill">1</span>
+                                 </li>
+                            {% elif record.trade_result == 2 %}
+                                <li class="list-group-item justify-content-between list-group-item-danger">
+                                    <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago <strong>Declined</strong>
+                                    <span class="badge badge-default badge-pill">1</span>
+                                </li>
+                            {% else %}
+                                <li class="list-group-item justify-content-between list-group-item-info">
+                                    <p>{{record.p_name}}    buyer: {{record.buyerid}}   ordered {{record.date_ago}} days ago
+                                        <a href="{{ record.url }}"><strong>confirm</strong></a>
+                                    </p>
+                                    <span class="badge badge-default badge-pill">1</span>
+                                </li>
+
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
                 </div><!-- /col-sm-12 -->
             </div><!-- /row -->
             <div class="row">

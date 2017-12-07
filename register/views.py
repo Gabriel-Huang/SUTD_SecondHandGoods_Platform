@@ -112,8 +112,12 @@ def comment(request, pk):
                 cursor.execute('''SELECT f_id FROM Feedback ORDER BY f_id DESC LIMIT 1;''')
                 
                 row = cursor.fetchall()
+<<<<<<< HEAD
 
                 if row[0] == ():
+=======
+                if row == ():
+>>>>>>> 21be656b3b8978cbfa5112cb5cf2f114ecd7b79e
                     cursor.execute(
                     '''INSERT INTO Feedback
                     values (%s, %s, %s, %s, %s, %s, %s);  ''',

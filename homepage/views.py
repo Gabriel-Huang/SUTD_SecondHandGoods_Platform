@@ -12,15 +12,11 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     products = []
     with connection.cursor() as cursor:
-        cursor.execute("SELECT p_id, p_name, product_pic_link FROM Product order by p_id limit 5")
-        row = cursor.fetchall()
-    for i in range(len(row)):
-        dic = {}
-        url = '/products/detials/%s'%row[i][0]
-        dic['url'] = url
-        dic['p_name'] = row[i][1]
-        dic['pic_link'] = row[i][2]
-        products.append(dic)
+        cursor.execute("SELECT p_id, p_name, product_pic_link, sellerid FROM Product order by p_id limit 5")
+        products = dictfetchall(cursor)
+    for i in range(len(products)):
+        url = '/products/detials/%s'%products[i]['p_id']
+        products[i]['url'] = url
 
     template = 'home.html'
     with connection.cursor() as cursor:

@@ -77,8 +77,8 @@
             <div class="thumbnail">
               <img class="product-list-pic" src="{{ product.product_pic_link }}" alt="WELCOME TO SUTD">
               <p><strong>{{ product.p_name }}</strong></p>
-              <p>Seller: {{ product.sellername }}</p>
-              <button class="btn" href="{{ product.url }}">Buy Now</button>
+              <p>Seller: {{ product.sellerid }}</p>
+                <a href="{{ product.url }}" class="btn" role="button">Buy Now</a>
             </div>
           </div>
      {% endfor %}
