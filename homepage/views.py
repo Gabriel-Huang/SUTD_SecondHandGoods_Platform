@@ -6,10 +6,41 @@ from django.shortcuts import render
 from django.db import connection
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from difflib import SequenceMatcher
+from collections import Counter
+
 
 
 # Create your views here.
 def home(request):
+    user = request.user
+
+    recommend = []
+    TargetProduct = []
+    Test = []
+    with connection.cursor() as cursor:
+        cursor.execute('''SELECT p_id, productid, p_name FROM OrderRecord, Product where p_id = productid and buyerid = "%s"''' %user)
+        user_products = dictfetchall(cursor)
+        cursor.execute("SELECT p_id, p_name FROM Product")
+        all_product = dictfetchall(cursor)
+
+    for i in user_products:
+        TargetProduct.append((i['p_id'], i['p_name']))
+    for i in all_product:
+        Test.append(i['p_name'])
+
+    productid = []
+    # for k in range (0,len(TargetProduct)):
+    #     for i in range (0, len(Test)):
+    #            listofsimilarity[k].append((Test[i][0],similar(Test[i][1],TargetProduct[k])))
+	# b = sorted(range(len(listofsimilarity[k])), key=lambda i: listofsimilarity[k][i][1],reverse=True)[:2]
+	# for j in b:
+	# 	productid.append(listofsimilarity[k][j][0])
+
+    # pid = first_n(productid)
+    ##################tmr#####################
+
+
     products = []
     with connection.cursor() as cursor:
         cursor.execute("SELECT p_id, p_name, product_pic_link, sellerid FROM Product order by p_id limit 5")
@@ -85,3 +116,11 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
+
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
+
+def first_n(productid, num):
+	count = Counter(productid)
+	c = sorted(range(len(count)), key=lambda i: count[i],reverse=True)[:num]
+	return c

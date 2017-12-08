@@ -9,8 +9,18 @@
     {% if detial.quantity > 0 %}
         <p><strong>Quantity:</strong> {{ detial.quantity }}</p>
         <p><strong>Price:</strong> {{ detial.price }}</p>
-        <p><a href="{{ detial.order_url }}"><strong>Buy!!!</strong></a></p>
+
+        {% if denied %}
+
+            <p><strong>This is your own product</strong></p>
+            
+        {% else %}
+
+            <p><a href="{{ detial.order_url }}"><strong>Buy!!!</strong></a></p>
+
+        {% endif %}
+
     {% else %}
         <p><strong>SOLD OUT!</strong>
     {% endif %}
-{% endblock %} 
+{% endblock %}

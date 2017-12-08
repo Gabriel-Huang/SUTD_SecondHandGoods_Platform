@@ -17,7 +17,7 @@ class postForm(forms.Form):
     description  = forms.CharField(required = True, max_length = 200)
     price = forms.FloatField(required = True)
     quantity = forms.IntegerField(required = True)
-    category = forms.MultipleChoiceField(required=False,
+    category = forms.ChoiceField(required=True,
          widget=RadioSelect, choices=CATEGORY_CHOICE)
     pic = forms.FileField(required = True)
 

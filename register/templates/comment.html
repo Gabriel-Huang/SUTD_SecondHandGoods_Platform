@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Comment</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit!</button>
-  </form>
-
+    {% if duplicate_comments %}
+        {% url 'home' as home %}
+        <p><strong>You've already commented on this product !</strong></p>
+        <p>Go back to <a href="{% url 'home' %}">homepage</a></p>
+    {% else %}
+      <h2>Comment</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit!</button>
+      </form>
+    {% endif %}
 {% endblock %}

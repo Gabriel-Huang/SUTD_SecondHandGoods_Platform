@@ -103,6 +103,13 @@ def comment(request, pk):
     comment_on = pk.split('_pid_')[0]
     product_id = pk.split('_pid_')[1]
     template = 'comment.html'
+    context = {}
+    with connection.cursor() as cursor:
+        cursor.execute('''SELECT f_id FROM Feedback where Seller = %s and Product = %s and FeedbackUser = %s;''', [comment_on, product_id, user])
+        row = cursor.fetchall()
+    if row != ():
+        context['duplicate_comments'] = 1
+
     if request.method == 'POST':
         form = commentForm(request.POST)
         if form.is_valid():
@@ -110,14 +117,9 @@ def comment(request, pk):
             now = datetime.now().replace(microsecond=0)
             with connection.cursor() as cursor:
                 cursor.execute('''SELECT f_id FROM Feedback ORDER BY f_id DESC LIMIT 1;''')
-                
-                row = cursor.fetchall()
-<<<<<<< HEAD
 
-                if row[0] == ():
-=======
+                row = cursor.fetchall()
                 if row == ():
->>>>>>> 21be656b3b8978cbfa5112cb5cf2f114ecd7b79e
                     cursor.execute(
                     '''INSERT INTO Feedback
                     values (%s, %s, %s, %s, %s, %s, %s);  ''',
@@ -134,7 +136,8 @@ def comment(request, pk):
             return redirect('home')
     else:
         form = commentForm()
-    return render(request, template, {'form': form})
+    context['form'] = form
+    return render(request, template, context)
 
 
 def dictfetchall(cursor):
