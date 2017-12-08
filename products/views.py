@@ -18,7 +18,7 @@ def detials(request, pk):
     with connection.cursor() as cursor:
         cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid,
         p_quantity, p_description, p_date, price
-        FROM Product where p_id = %s;''', (pk))
+        FROM Product where p_id = %s;'''%pk)
         row = cursor.fetchall()[0]
 
     detials['name'] = row[1]
@@ -89,7 +89,7 @@ def order(request, pk):
     with connection.cursor() as cursor:
         cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid,
         p_quantity, p_description, p_date, price
-        FROM Product where p_id = %s;''', (pk))
+        FROM Product where p_id = %s;'''%pk)
         row = cursor.fetchall()[0]
 
     pid = row[0]
@@ -115,7 +115,7 @@ def order(request, pk):
             quantity = int(form.cleaned_data.get('quantity'))
             now = datetime.now().replace(microsecond=0)
 
-            if quantity >= int(detials['quantity']):
+            if quantity > int(detials['quantity']):
                 return render(request, 'order.html', denied)
             else:
 

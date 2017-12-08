@@ -70,8 +70,8 @@ def profile(request):
             record['p_name'] = pname
             record['date_ago'] = (datetime.now().date() - record['o_date']).days
             record['url'] = url
-            if quantity < 1:
-                sell_record.remove(record)
+            # if quantity < 1:
+            #     sell_record.remove(record)
 
         for record in order_record:
 
