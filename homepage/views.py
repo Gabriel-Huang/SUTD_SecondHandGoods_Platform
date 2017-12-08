@@ -98,10 +98,15 @@ def search(request):
         if request.user.is_authenticated():
             cursor.execute("INSERT INTO Search_Record VALUES (%s, %s, %s)",
                            [request.user, q, '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())])
+    categories = set()
     for product in product_list:
         product['detail'] = '/products/detials/%s' %product['p_id']
+        categories.add(product['category'])
+    categories = list(categories)
+
     return render(request, 'results.html', {'error_msg': error_msg,
-                                                     'post_list': product_list})
+                                            'post_list': product_list,
+                                            'categories': categories})
 
 
 @login_required
