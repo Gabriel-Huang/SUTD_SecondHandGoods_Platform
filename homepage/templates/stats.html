@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+<h1>Popular Products</h1><hr>
+ {% for product in pop_product %}
+     <div class="col-sm-4">
+        <div class="thumbnail">
+          <img class="product-list-pic" src="{{ product.product_pic_link }}" alt="IMAGE NOT FOUND">
+          <p><strong>{{ product.p_name }}</strong></p>
+          <p>Seller: {{ product.sellerid }}</p>
+            <a href="{{ product.url }}" class="btn" role="button">Buy Now</a>
+        </div>
+      </div>
+ {% endfor %}
+</div>
+
+
+<div class="col-md-3">
+    <h3>Popular Seller</h3>
+    <hr>
+    {% if pop_seller %}
+    <ol class="list-group">
+        {% for user in pop_seller %}
+            <li class="list-group-item">
+                <h4><a href="{{ user.get_absolute_url }}">{{ user.productseller }}</a></h4>
+            </li>
+        {% endfor %}
+    </ol>
+    {% else %}
+        <h4>No Data Returned</h4>
+    {% endif %}
+</div>
+{% endblock %}

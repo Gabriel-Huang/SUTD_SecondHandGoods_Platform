@@ -26,15 +26,16 @@
             <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
+        <li><a href="/homepage/stats">Stats</a></li>
         {% if user.is_authenticated %}
         <li><a href="/accounts/profile/">Hi, {{ user.get_username }}!</a></li>
         <li><a href="/products/post/">Sell an item !</a></li>
         <li><a href="/accounts/signout/">Logout</a></li>
         {% else %}
         <li><a href="/accounts/login">Login</a></li>
-      {% endif %}
+        <li><a href="/accounts/register">Register</a></li>
+        {% endif %}
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-

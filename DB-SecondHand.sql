@@ -73,3 +73,20 @@ Create Table Search_Record(
     Primary Key (user, content, time),
     FOREIGN KEY (user) references auth_user(username)
 );
+
+select * from Search_Record;
+select * from Product;
+
+delimiter |
+create trigger auto_decline
+after update on Product
+for each row
+begin
+	if new.p_quantity = 0 then
+	update OrderRecord set trade_result = 2
+	where OrderRecord.productid = new.p_id 
+	and trade_result = 0;
+	end if;
+end;
+|
+delimiter ;

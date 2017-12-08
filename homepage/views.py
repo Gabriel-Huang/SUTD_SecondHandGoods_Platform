@@ -13,36 +13,61 @@ from collections import Counter
 # Create your views here.
 def home(request):
     user = request.user
+    if user:
+        recommend1 = {}
+        recommend = []
+        TargetProduct = []  # user products
+        Test = []   # all products
+        with connection.cursor() as cursor:
+            cursor.execute('''SELECT content FROM Search_Record where user = "%s"''' %user)
+            user_products = dictfetchall(cursor)
+            cursor.execute("SELECT p_id, p_name FROM Product where p_quantity > 0")
+            all_product = dictfetchall(cursor)
 
-    recommend = []
-    TargetProduct = []
-    Test = []
-    with connection.cursor() as cursor:
-        cursor.execute('''SELECT p_id, productid, p_name FROM OrderRecord, Product where p_id = productid and buyerid = "%s"''' %user)
-        user_products = dictfetchall(cursor)
-        cursor.execute("SELECT p_id, p_name FROM Product")
-        all_product = dictfetchall(cursor)
+        for i in user_products:
+            TargetProduct.append(i['content'])
+        for i in all_product:
+            Test.append((i['p_id'],i['p_name']))
 
-    for i in user_products:
-        TargetProduct.append((i['p_id'], i['p_name']))
-    for i in all_product:
-        Test.append(i['p_name'])
+        listofsimilarity = [[] for x in xrange(len(TargetProduct))]
 
-    productid = []
-    # for k in range (0,len(TargetProduct)):
-    #     for i in range (0, len(Test)):
-    #            listofsimilarity[k].append((Test[i][0],similar(Test[i][1],TargetProduct[k])))
-	# b = sorted(range(len(listofsimilarity[k])), key=lambda i: listofsimilarity[k][i][1],reverse=True)[:2]
-	# for j in b:
-	# 	productid.append(listofsimilarity[k][j][0])
+        productid = []
 
-    # pid = first_n(productid)
-    ##################tmr#####################
+        for k in range (0,len(TargetProduct)):
+        	for i in range (0, len(Test)):
+        		listofsimilarity[k].append((Test[i][0],similar(Test[i][1],TargetProduct[k])))
+        	b = sorted(range(len(listofsimilarity[k])), key=lambda n: listofsimilarity[k][n][1],reverse=True)[:2]
+        	for j in b:
+        		productid.append(listofsimilarity[k][j][0])
 
+        # print TargetProduct
+        # print Test
+
+        pid = first_n(productid, 4)
+        if len(pid) < 4:
+            with connection.cursor() as cursor:
+                cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid
+                FROM Product where p_quantity >0 order by p_id desc limit 4''')
+                recommend = dictfetchall(cursor)
+
+        else:
+            with connection.cursor() as cursor:
+                for i in pid:
+                    if i == 0:
+                        cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid
+                        FROM Product where p_id = %s;''' %i)
+                        record = dictfetchall(cursor)[0]
+                        recommend1 = record
+                    else:
+                        cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid
+                        FROM Product where p_id = %s;''' %i)
+                        record = dictfetchall(cursor)[0]
+                        recommend.append(record)
 
     products = []
     with connection.cursor() as cursor:
-        cursor.execute("SELECT p_id, p_name, product_pic_link, sellerid FROM Product order by p_id limit 5")
+        cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid
+        FROM Product where p_quantity >0 order by p_id desc limit 5''')
         products = dictfetchall(cursor)
     for i in range(len(products)):
         url = '/products/detials/%s'%products[i]['p_id']
@@ -54,7 +79,7 @@ def home(request):
         popular_seller = dictfetchall(cursor)
     for user in popular_seller:
         user['get_absolute_url'] = reverse('user-view', args=[str(user['username'])])
-    context = {"popular_seller": popular_seller, "products": products}
+    context = {"popular_seller": popular_seller, "products": products, 'recommend1': recommend1, 'recommend': recommend}
     return render(request, template, context)
 
 
@@ -111,6 +136,50 @@ def user_view(request, pk):
                'seller': seller}
     return render(request, template, context)
 
+def stats(request):
+    with connection.cursor() as cursor:
+        cursor.execute('''SELECT * FROM Product
+            Where p_id IN
+            (SELECT productid FROM (
+            SELECT productid, count(o_id) FROM OrderRecord
+            WHERE trade_result = 0
+            GROUP BY productid
+            ORDER BY count(o_id) DESC
+            LIMIT 5)AS COUNT);''')
+        pop_product = dictfetchall(cursor)
+
+        cursor.execute('''SELECT productseller FROM (
+            SELECT count(o_id), productseller FROM OrderRecord
+            GROUP BY productseller
+            ORDER BY count(o_id) DESC
+            LIMIT 5) AS COUNT;''')
+
+        pop_seller = dictfetchall(cursor)
+
+    print pop_product
+    for i in range(len(pop_product)):
+        url = '/products/detials/%s'%pop_product[i]['p_id']
+        pop_product[i]['url'] = url
+
+    for user in pop_seller:
+        user['get_absolute_url'] = '/homepage/user/%s'%user['productseller']
+
+    template = 'stats.html'
+    context = {}
+    context['pop_product'] = pop_product
+    context['pop_seller'] = pop_seller
+    return render(request, template, context)
+
+
+def first_n(productid, num):
+    count = Counter(productid).most_common(num)
+    pid = []
+    if len(count)>=num:
+
+        for i in range(num):
+            pid.append(count[i][0])
+    return pid
+
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
     columns = [col[0] for col in cursor.description]
@@ -121,8 +190,3 @@ def dictfetchall(cursor):
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
-
-def first_n(productid, num):
-	count = Counter(productid)
-	c = sorted(range(len(count)), key=lambda i: count[i],reverse=True)[:num]
-	return c

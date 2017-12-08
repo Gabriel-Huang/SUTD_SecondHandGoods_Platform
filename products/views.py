@@ -154,7 +154,7 @@ def conformation(request, pk):
     with connection.cursor() as cursor:
 
         cursor.execute('''SELECT o_id, productid, o_quantity, buyerid, tradeinfo
-                    FROM OrderRecord WHERE o_id = %s''', (pk))
+                    FROM OrderRecord WHERE o_id = %s'''%pk)
         sell_record = dictfetchall(cursor)[0]
         pid = sell_record['productid']
 
@@ -189,13 +189,15 @@ def conformation(request, pk):
                     cursor.execute('''UPDATE Product SET p_quantity = p_quantity - %s where
                     p_id = %s''',(sell_record['o_quantity'], product_id))
                     # if no stock, decline all order records
-                    cursor.execute('''SELECT p_quantity
-                    FROM Product where p_id = %s;'''%product_id)
-                    res = dictfetchall(cursor)[0]
-                    quantity_left = res['p_quantity']
-                    if quantity_left == 0:
-                        cursor.execute('''UPDATE OrderRecord SET trade_result = %s where
-                        productid = %s and o_id <> %s''',(2, product_id, pk))
+                    # cursor.execute('''SELECT p_quantity
+                    # FROM Product where p_id = %s;'''%product_id)
+                    # res = dictfetchall(cursor)[0]
+                    # quantity_left = res['p_quantity']
+                    # if quantity_left == 0:
+                    #     cursor.execute('''UPDATE OrderRecord SET trade_result = %s where
+                    #     productid = %s and o_id <> %s''',(2, product_id, pk))
+
+                    ## replaced by lingyun's terliger
 
             return render(request, template, success)
     else:
