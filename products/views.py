@@ -10,12 +10,17 @@ from datetime import datetime
 
 
 def detials(request, pk):
+
+    user = request.user
+    context = {}
     detials = {}
+
     with connection.cursor() as cursor:
         cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid,
         p_quantity, p_description, p_date, price
-        FROM Product where p_id = %s;''', (pk))
+        FROM Product where p_id = %s;'''%pk)
         row = cursor.fetchall()[0]
+
     detials['name'] = row[1]
     detials['order_url'] = '/products/order/%s'%pk
     detials['pic_link'] = row[2]
@@ -27,7 +32,11 @@ def detials(request, pk):
     detials['description'] = row[5]
     detials['date']= row[6]
     detials['price'] = row[7]
-    context = {'detial': detials}
+
+    if seller == user.username:
+        context['denied'] = 1
+
+    context['detial'] = detials
 
     template = 'detials.html'
     return render(request, template, context)
@@ -37,6 +46,7 @@ def detials(request, pk):
 def post(request):
     user = request.user
     template = 'post.html'
+    success = {'success': 1}
     if request.method == 'POST':
         form = postForm(request.POST, request.FILES)
         if form.is_valid():
@@ -61,13 +71,12 @@ def post(request):
                     productname, quantity, discription, now, uploaded_file_url, category, price))
 
                 else:
-                    pid = int(row) + 1
+                    pid = int(row[0][0]) + 1
                     cursor.execute('''INSERT INTO Product (p_id, sellerid, sellername,
                     p_name, p_quantity, p_description, p_date, product_pic_link, category, price) values
                     (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (pid, user, '',
                     productname, quantity, discription, now, uploaded_file_url, category, price))
-            return render(request, 'post.html', {
-                        'uploaded_file_url': uploaded_file_url})
+            return render(request, 'post.html', success)
 
     else:
         form = postForm()
@@ -80,8 +89,9 @@ def order(request, pk):
     with connection.cursor() as cursor:
         cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid,
         p_quantity, p_description, p_date, price
-        FROM Product where p_id = %s;''', (pk))
+        FROM Product where p_id = %s;'''%pk)
         row = cursor.fetchall()[0]
+
     pid = row[0]
     detials['name'] = row[1]
     detials['order_url'] = '/products/order/%s'%pk
@@ -95,7 +105,9 @@ def order(request, pk):
     detials['date']= row[6]
     detials['price'] = row[7]
     template = 'order.html'
+
     success = {'success': 1}
+    denied = {'denied': 1}
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -103,24 +115,28 @@ def order(request, pk):
             quantity = int(form.cleaned_data.get('quantity'))
             now = datetime.now().replace(microsecond=0)
 
-            with connection.cursor() as cursor:
+            if quantity > int(detials['quantity']):
+                return render(request, 'order.html', denied)
+            else:
 
-                cursor.execute('''SELECT o_id FROM OrderRecord ORDER BY o_id DESC LIMIT 1;''')
+                with connection.cursor() as cursor:
 
-                row = cursor.fetchall()
-                if row == ():
-                    cursor.execute('''INSERT INTO OrderRecord (o_id, productid, productseller,
-                    o_quantity, buyerid, o_date, tradeinfo, trade_result) values
-                    (%s, %s, %s, %s, %s, %s, %s, %s);''', (0, pid, seller,
-                    quantity, user, now, message, 0))
+                    cursor.execute('''SELECT o_id FROM OrderRecord ORDER BY o_id DESC LIMIT 1;''')
 
-                else:
+                    row = cursor.fetchall()
+                    if row == ():
+                        cursor.execute('''INSERT INTO OrderRecord (o_id, productid, productseller,
+                        o_quantity, buyerid, o_date, tradeinfo, trade_result) values
+                        (%s, %s, %s, %s, %s, %s, %s, %s);''', (0, pid, seller,
+                        quantity, user, now, message, 0))
 
-                    oid = int(row[0][0]) + 1
-                    cursor.execute('''INSERT INTO OrderRecord (o_id, productid, productseller,
-                    o_quantity, buyerid, o_date, tradeinfo, trade_result) values
-                    (%s, %s, %s, %s, %s, %s, %s, %s);''', (oid, pid, seller,
-                    quantity, user, now, message, 0))
+                    else:
+
+                        oid = int(row[0][0]) + 1
+                        cursor.execute('''INSERT INTO OrderRecord (o_id, productid, productseller,
+                        o_quantity, buyerid, o_date, tradeinfo, trade_result) values
+                        (%s, %s, %s, %s, %s, %s, %s, %s);''', (oid, pid, seller,
+                        quantity, user, now, message, 0))
 
             return render(request, 'order.html', success)
 
@@ -132,7 +148,9 @@ def order(request, pk):
 
 @login_required
 def conformation(request, pk):
+
     detials = {}
+
     with connection.cursor() as cursor:
 
         cursor.execute('''SELECT o_id, productid, o_quantity, buyerid, tradeinfo
@@ -144,7 +162,8 @@ def conformation(request, pk):
         p_quantity, p_description, p_date, price
         FROM Product where p_id = %s;'''%pid)
         row = cursor.fetchall()[0]
-    pid = row[0]
+
+    product_id = row[0]
     detials['name'] = row[1]
     detials['pic_link'] = row[2]
     detials['quantity_left'] = row[4]
@@ -155,17 +174,35 @@ def conformation(request, pk):
     detials['tradeinfo'] = sell_record['tradeinfo']
     template = 'conformation.html'
     success = {'success': 1}
+
     if request.method == 'POST':
         form = conformationForm(request.POST)
         if form.is_valid():
             result = form.cleaned_data.get('Options')
             with connection.cursor() as cursor:
+
                 cursor.execute('''UPDATE OrderRecord SET trade_result = %s where
                 o_id = %s''',(result, pk))
+                # if success, cut product quantity by one
+                print type(int(result))
+                if int(result) == 1:
+                    cursor.execute('''UPDATE Product SET p_quantity = p_quantity - %s where
+                    p_id = %s''',(sell_record['o_quantity'], product_id))
+                    # if no stock, decline all order records
+                    cursor.execute('''SELECT p_quantity
+                    FROM Product where p_id = %s;'''%product_id)
+                    res = dictfetchall(cursor)[0]
+                    quantity_left = res['p_quantity']
+                    if quantity_left == 0:
+                        cursor.execute('''UPDATE OrderRecord SET trade_result = %s where
+                        productid = %s and o_id <> %s''',(2, product_id, pk))
+
             return render(request, template, success)
     else:
         form = conformationForm()
+
     context = {'detial': detials, 'form': form}
+
     return render(request, template, context)
 
 def dictfetchall(cursor):

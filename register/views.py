@@ -70,8 +70,8 @@ def profile(request):
             record['p_name'] = pname
             record['date_ago'] = (datetime.now().date() - record['o_date']).days
             record['url'] = url
-            if quantity < 1:
-                sell_record.remove(record)
+            # if quantity < 1:
+            #     sell_record.remove(record)
 
         for record in order_record:
 
@@ -103,6 +103,13 @@ def comment(request, pk):
     comment_on = pk.split('_pid_')[0]
     product_id = pk.split('_pid_')[1]
     template = 'comment.html'
+    context = {}
+    with connection.cursor() as cursor:
+        cursor.execute('''SELECT f_id FROM Feedback where Seller = %s and Product = %s and FeedbackUser = %s;''', [comment_on, product_id, user])
+        row = cursor.fetchall()
+    if row != ():
+        context['duplicate_comments'] = 1
+
     if request.method == 'POST':
         form = commentForm(request.POST)
         if form.is_valid():
@@ -110,7 +117,7 @@ def comment(request, pk):
             now = datetime.now().replace(microsecond=0)
             with connection.cursor() as cursor:
                 cursor.execute('''SELECT f_id FROM Feedback ORDER BY f_id DESC LIMIT 1;''')
-                
+
                 row = cursor.fetchall()
                 if row == ():
                     cursor.execute(
@@ -129,7 +136,8 @@ def comment(request, pk):
             return redirect('home')
     else:
         form = commentForm()
-    return render(request, template, {'form': form})
+    context['form'] = form
+    return render(request, template, context)
 
 
 def dictfetchall(cursor):
