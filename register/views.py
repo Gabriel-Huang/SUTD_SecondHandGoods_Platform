@@ -51,11 +51,11 @@ def profile(request):
         cursor.execute("SELECT p_name FROM Product WHERE sellerid = %s", [user])
         row = dictfetchall(cursor)
 
-        cursor.execute('''SELECT o_id, productid, o_quantity, buyerid, o_date, trade_result
-                    FROM OrderRecord WHERE productseller = %s''', [user])
+        cursor.execute('''SELECT o_id, productid, product_pic_link, o_quantity, buyerid, o_date, trade_result
+                    FROM OrderRecord, Product WHERE productseller = %s and p_id = productid''', [user])
         sell_record = dictfetchall(cursor)
 
-        cursor.execute('''SELECT p_id, p_name, productseller, o_id, productid, o_quantity, buyerid, o_date, trade_result
+        cursor.execute('''SELECT p_id, p_name, productseller, product_pic_link, o_id, productid, o_quantity, buyerid, o_date, trade_result
                     FROM OrderRecord, Product WHERE buyerid = %s and p_id = productid''', [user])
         order_record = dictfetchall(cursor)
 

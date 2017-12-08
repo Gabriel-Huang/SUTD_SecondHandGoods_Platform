@@ -6,29 +6,27 @@ use platform;
 --     email Text(50),
 --     user_pic_link Char(50),
 -- 	primary key (u_id));-- 
-alter table Product add column category text;
-alter table Product add column price float;
-alter table Product modify column p_date DATETIME;
-select * from Product;
+
+
 Create Table Product ( 	#added column category
 	p_id Integer,
     sellerid varchar(150),
-    sellername Char(20),
     p_name Char(100),
     p_quantity Integer, 
     p_description Text(500),
-    p_date Date,  # modified to DATETIME
-    product_pic_link Text(100),
+    p_date DATETIME,
+    product_pic_link Text,
+    category Text,
+    price float,
     primary key (p_id, sellerid),
     foreign key (sellerid) references auth_user(username));
-insert into Product (p_id, sellerid, sellername, p_name, p_quantity, p_description, p_date, product_pic_link)
-values 
-(1, 'jiahui','jiahui','Iphone 11', 1, 'this is expensive', '2017-11-17','auiwg7^*%^jasg');
 
 
 Create Table OrderRecord (
 	o_id Integer,
     productid integer Not Null,
+    tradeinfo Text,
+    trade_result integer,
     productseller varchar(150),
     o_quantity integer,
     buyerid varchar (150),
@@ -37,13 +35,6 @@ Create Table OrderRecord (
     foreign key (productid, productseller) references Product(p_id, sellerid),
     foreign key (buyerid) references auth_user(username));
 
-
-alter table OrderRecord add column tradeinfo text;
-alter table OrderRecord add column trade_result int;
-insert into OrderRecord (o_id, productid)
-values (1, 0);
-
-    
     
 Create Table Feedback (
 	f_id Integer,
@@ -75,35 +66,10 @@ Create Table Rating (
     foreign key (FeedbackUser, FeedbackProduct) references Feedback (FeedbackUser, Product),
     Check (RaringUser <> FeedbackUser)); 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+Create Table Search_Record(
+	user varchar(150),
+    content varchar(300),
+    time timestamp,
+    Primary Key (user, content, time),
+    FOREIGN KEY (user) references auth_user(username)
+);
