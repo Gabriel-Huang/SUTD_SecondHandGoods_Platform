@@ -45,15 +45,21 @@ Our recommendation system takes every user's search history. Then for each searc
 ### 5. Product Page
 
 ### 6. Database Schema
-User (Auth)
-Product
-OrderRecord
-Feedback
-Rating
+* User (Auth)
+
+* Product
+
+* OrderRecord
+
+* Search_Record
+
+* Feedback
+
+* Rating
 
 
-### 7. Raw SQL Qury
-#### a. Stats
+### 7. Raw SQL Query
+#### a. Statistics
 a.	list of n most popular sellers (in terms of items sold in this month) 
 b.	the list of m most popular categories
 
