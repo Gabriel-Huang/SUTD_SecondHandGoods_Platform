@@ -23,4 +23,5 @@ SELECT Feedback.f_content, score FROM(
 SELECT Feedback.fid, Feedback.f_content, AVG(Rating.r_score) AS score FROM Feedback, Rating, auth_user
 WHERE Feedback.f_id = Rating.Feedbackid 
 AND Feedback.user = '%s' %(username)
-GROUP BY Feedback.f_id) AS F;
+GROUP BY Feedback.f_id
+ORDER BY score DESC) AS F;
