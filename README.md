@@ -1,7 +1,7 @@
 # DB-Project
 An online 2nd hand goods trading platform for students in SUTD
 
-## Environment Set Up
+## Environment Setup
 Make sure you have the following installed
 1. virtualenv
 ```
@@ -29,7 +29,7 @@ A list of basic functionalities for our platfrom
 
 ### 1. Homepage
 #### a. Homepage for new user
-The homepage for new users displays banners and top-sale products. New users can choose to signup our platform by clicking the "" button in navigation bar, which links to our register page.
+The homepage for new users displays banners and top-sale products. New users can choose to signup for our platform by clicking the "" button in navigation bar, which links to our register page.
 
 #### b. Homepage for registered user
 The homepage will recommand products to registered user as long as he/she has search history. 
@@ -38,7 +38,7 @@ The homepage will recommand products to registered user as long as he/she has se
 
 
 ### 2. Recommendation Product
-Our recommendation system takes every user's search history. Then for each search history, we find the first two most similar products among all products to recommand. The reason we find 2 products for each search history is because we afraid the the data is not enough. Due to the limited space on homepage, we will only select n most frequent appeared product to recommand
+Our recommendation system takes every user's search history. Then for each search history record, we find the top two most similar products among all products to recommend. The reason we find 2 products for each search history is that we are afraid that the data is not enough. Due to the limited space on homepage, we will only select n most frequent appeared product to recommend
 
 ### 3. Register Page
 
