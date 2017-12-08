@@ -19,16 +19,13 @@ LIMIT 5)AS COUNT);
 
 -- Average rating for given comment
 
+SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
 SELECT p_name, F.f_date, F.f_content, score FROM(
 SELECT p_name, Feedback.f_id, Feedback.f_date, Feedback.f_content, AVG(Rating.r_score) AS score FROM Feedback, auth_user, Product, Rating
-WHERE Feedback.f_id = Rating.Feedbackid 
-AND Feedback.user = 'gil1'
+WHERE Feedback.f_id = Rating.Feedback_id 
+AND Feedback.FeedbackUser = 'gil1'
 GROUP BY Feedback.f_id
 ORDER BY score DESC) AS F;
 
-SELECT p_name, F.f_date, F.f_content, score FROM(
-SELECT p_name, Feedback.f_id, Feedback.f_date, Feedback.f_content, AVG(Rating.r_score) AS score FROM Feedback, auth_user, Product
-WHERE Feedback.f_id IN (Rating.Feedbackid) 
-AND Feedback.user = 'gil1'
-GROUP BY Feedback.f_id
-ORDER BY score DESC) AS F;
+
