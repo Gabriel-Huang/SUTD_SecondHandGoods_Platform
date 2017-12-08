@@ -25,13 +25,15 @@ and go to your project directory and do
 pip install -r requirments.txt
 ```
 ## Basic Functionality
-A list of basic functionalies for our platfrom
+A list of basic functionalities for our platfrom
 
 ### 1. Homepage
 #### a. Homepage for new user
 The homepage for new users displays banners and top-sale products. New users can choose to signup our platform by clicking the "" button in navigation bar, which links to our register page.
+
 #### b. Homepage for registered user
 The homepage will recommand products to registered user as long as he/she has search history. 
+
 #### c. Search Function
 
 
@@ -60,8 +62,9 @@ Our recommendation system takes every user's search history. Then for each searc
 
 ### 7. Raw SQL Query
 #### a. Statistics
-a.	list of n most popular sellers (in terms of items sold in this month) 
-b.	the list of m most popular categories
+*	List of 5 most popular sellers (in terms of number of pending orders--the more people who wants to buy something from this seller, the more popular he/she is) 
+*	List of 5 most popular items
+* Average ratings for each given comment
 
 
 
