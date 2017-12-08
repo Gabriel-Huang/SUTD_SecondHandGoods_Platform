@@ -57,13 +57,13 @@
             <h3>Popular Seller</h3>
             <hr>
             {% if popular_seller %}
-            <ol class="list-group">
-                {% for user in popular_seller %}
-                    <li class="list-group-item">
-                        <h4><a href="{{ user.get_absolute_url }}">{{ user.username }}</a></h4>
-                    </li>
-                {% endfor %}
-            </ol>
+                <ol class="list-group" style="list-style: decimal inside;">
+                    {% for user in popular_seller %}
+                        <li class="list-group-item" style="display: list-item;">
+                            <a href="{{ user.get_absolute_url }}">{{ user.username }}</a>
+                        </li>
+                    {% endfor %}
+                </ol>
             {% else %}
                 <h4>No Data Returned</h4>
             {% endif %}
@@ -83,7 +83,6 @@
           </div>
      {% endfor %}
     </div>
-
 
 
 

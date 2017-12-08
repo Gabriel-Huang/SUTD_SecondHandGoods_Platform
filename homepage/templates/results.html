@@ -2,11 +2,28 @@
 {% load staticfiles %}
 
 {% block content %}
-   {% if post_list %}
+    {% if post_list %}
+        <h3>Filter Product</h3>
+        <div class="controls">
+        <button type="button" data-filter="all" class="btn">Show All</button>
+        {% for category in categories %}
+            <button type="button" data-filter=".{{ category }}" class="btn">{{ category }}</button>
+        {% endfor %}
+            <button type="button" data-filter=".other" class="btn">None</button>
+        </div>
+
+        <div class="controls">
+        {% for category in categories %}
+            <button type="button" data-filter=".{{ category }}" class="btn">{{ category }}</button>
+        {% endfor %}
+            <button type="button" data-filter=".other" class="btn">None</button>
+        </div>
+
    <h3>Here is what we find</h3>
    <div class="row">
-    {% for post in post_list %}
-          <div class="col-sm-4">
+       <div class="mixcontainer">
+       {% for post in post_list %}
+          <div class="col-sm-4 mix {{ post.category }}">
             <div class="thumbnail">
               <img class="product-list-pic" src="{{ post.product_pic_link }}" alt="WELCOME TO SUTD">
               <p><strong>{{ post.p_name }}</strong></p>
@@ -14,11 +31,22 @@
               <button class="btn" href="{{ product.url }}">Buy Now</button>
             </div>
           </div>
-    {% endfor %}
+       {% endfor %}
+       </div>
    </div>
-
     {% else %}
         <h3>Sorry, No Matched Result</h3>
     {% endif %}
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.2.2/mixitup.min.js"></script>
+    <script>
+        var containerEl = document.querySelector('.mixcontainer');
+        var mixer = mixitup(containerEl, {
+                controls: {
+                    toggleLogic: 'or'
+                }
+            });
+    </script>
 
 {% endblock %}
