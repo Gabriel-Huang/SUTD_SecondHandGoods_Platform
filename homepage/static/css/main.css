@@ -1,3 +1,133 @@
+/* product detail page */
+.product {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+}
+.left-column {
+  width: 65%;
+  position: relative;
+}
+
+.right-column {
+  width: 35%;
+  margin-top: 60px;
+}
+
+.left-column img {
+    max-width: 90%;
+    max-height: 500px;
+    height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Product Description */
+.product-description {
+  border-bottom: 1px solid #E1E8EE;
+  margin-bottom: 20px;
+}
+.product-description span {
+  font-size: 12px;
+  color: #358ED7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.product-description h1 {
+  font-weight: 300;
+  font-size: 52px;
+  color: #43484D;
+  letter-spacing: -2px;
+}
+.product-description p {
+  font-size: 16px;
+  font-weight: 300;
+  color: #86939E;
+  line-height: 24px;
+}
+
+/* Product Price */
+.product-price {
+  align-items: center;
+        display: inline;
+}
+
+.product-price span {
+    font-size: 26px;
+  font-weight: 300;
+  color: #43474D;
+  margin-right: 20px;
+}
+
+.cart-btn {
+  display: inline-block;
+  background-color: #000000;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 12px 30px;
+  transition: all .5s;
+    border: 1px solid #333;
+}
+.cart-btn:hover {
+  background-color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 940px) {
+  .product {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  .left-column,
+  .right-column {
+    width: 100%;
+  }
+
+
+}
+
+@media (max-width: 535px) {
+  .left-column img {
+    width: 220px;
+    top: -85px;
+  }
+}
+
+/* input and textarea*/
+input, select {
+    margin: 8px 0;
+    padding: 3px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 50%;
+    height:100px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    -webkit-transition: height 0.4s ease-in-out;
+    transition: height 0.4s ease-in-out;
+}
+
+textarea:focus{
+    height: 200px;
+}
+
+
+/* footer */
 #footer {
   padding: 60px 0 40px;
     background-color: #0f0f0f;
@@ -43,6 +173,7 @@
     color: #555;
 }
 
+/* button */
 /* Black buttons with extra padding and without rounded borders */
 .btn {
     padding: 10px 20px;
@@ -59,7 +190,7 @@
     color: #000;
 }
 
-
+/* search bar */
 .search-bar{
   margin-top: 20px;
   margin-bottom: 20px;
@@ -116,6 +247,8 @@
 :-ms-input-placeholder {
    text-align: center;
 }
+
+/* back to top button */
 
 #backToTopBtn {
     display: none; /* Hidden by default */

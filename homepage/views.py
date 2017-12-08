@@ -96,7 +96,7 @@ def user_view(request, pk):
                            [rate, datetime.datetime.now().date(), feedback_user, product, Feedback_id])
     template = 'profile_other.html'
     with connection.cursor() as cursor:
-        cursor.execute("SELECT p_name, p_id FROM Product WHERE sellerid = %s", [pk])
+        cursor.execute("SELECT p_name, p_id, product_pic_link, p_quantity FROM Product WHERE sellerid = %s", [pk])
         products = dictfetchall(cursor)
         cursor.execute("SELECT FeedbackUser, f_content, f_date, Product, f_id, p_name "
                        "FROM Feedback, Product "
