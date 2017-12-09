@@ -1,3 +1,41 @@
+/* accodrion */
+button.accordion {
+    margin: 20px;
+    background-color: #ffffff;
+    color: #444;
+    cursor: pointer;
+    width: 25%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    display: inline-flex;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #b6b6b6;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    padding: 0 18px 0;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
 /* product detail page */
 .product {
   max-width: 1200px;
@@ -198,6 +236,12 @@ textarea:focus{
   position: relative; /* or absolute */
   left: 30%;
 
+}
+.search-bar1{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  position: relative; /* or absolute */
 }
 
 .rounded {

@@ -79,34 +79,52 @@ def home(request):
         popular_seller = dictfetchall(cursor)
     for user in popular_seller:
         user['get_absolute_url'] = reverse('user-view', args=[str(user['username'])])
-    context = {"popular_seller": popular_seller, "products": products, 'recommend1': recommend1, 'recommend': recommend}
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT DISTINCT category FROM Product")
+        all_categories = [category[0] for category in cursor.fetchall()]
+    context = {"popular_seller": popular_seller, "products": products, 'recommend1': recommend1, 'recommend': recommend,
+               "all_categories": all_categories}
     return render(request, template, context)
 
 
 def search(request):
 
-    q = request.GET.get('q')
-    error_msg = ''
+    content = request.GET.get('content')
+    sellername = request.GET.get('sellername')
+    category = request.GET.get('category')
+    startdate = request.GET.get('startdate')
+    enddate = request.GET.get('enddate')
+    query_sentence = "SELECT * FROM Product WHERE (p_name REGEXP %s OR p_description REGEXP %s) "
+    query_list = [content, content]
+    if sellername is not "":
+        query_sentence += "AND sellerid REGEXP %s "
+        query_list += [sellername]
+    if category is not "":
+        query_sentence += "AND category = %s "
+        query_list += [category]
+    if startdate is not "" and enddate is not "":
+        query_sentence += "and p_date Between %s AND %s"
+        query_list += [startdate + " 00:00:00", enddate + " 23:59:59"]
+    print query_sentence
 
-    # error.html needed！！！
-    # if not q:
-    #     error_msg = 'Please type in keywords'
-    #     return render(request, 'homepage/errors.html', {'error_msg': error_msg})
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM Product WHERE p_name REGEXP %s OR p_description REGEXP %s", [q, q])
+        cursor.execute(query_sentence, query_list)
         product_list = dictfetchall(cursor)
+        cursor.execute("SELECT DISTINCT category FROM Product")
+        all_categories = [category[0] for category in cursor.fetchall()]
         if request.user.is_authenticated():
             cursor.execute("INSERT INTO Search_Record VALUES (%s, %s, %s)",
-                           [request.user, q, '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())])
+                           [request.user, content, '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())])
     categories = set()
     for product in product_list:
         product['detail'] = '/products/detials/%s' %product['p_id']
         categories.add(product['category'])
     categories = list(categories)
 
-    return render(request, 'results.html', {'error_msg': error_msg,
-                                            'post_list': product_list,
-                                            'categories': categories})
+    return render(request, 'results.html', {'post_list': product_list,
+                                            'categories': categories,
+                                            'all_categories': all_categories})
 
 
 @login_required

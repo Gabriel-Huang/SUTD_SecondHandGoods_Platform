@@ -2,19 +2,86 @@
 {% load staticfiles %}
 
 {% block content %}
+    <form class="search-bar1" method="get" action="search/">
+        {% csrf_token %}
+         <input type="search" class="search-box rounded" placeholder="Search Anything You Want..." name="content" required><button type="submit" id="search-icon"><img src="{% static "images/search.png" %}" style="width: 40px;height: 40px"></button>
+        <div>
+            <a class="accordion" role="button"><h4>Search With Criteria</h4></a>
+            <div class="panel">
+                <label>Seller: </label><input name="sellername" type="text">
+                <label>Category: </label>
+                <select name="category">
+                    <option value="">None</option>
+                    {% for category in all_categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+                <label>Start Date: </label>
+                <input type="date" name="startdate">
+                <label>End Date: </label>
+                <input type="date" name="enddate">
+{#                <label>Sort By: </label>#}
+{#                <select name="sortby">#}
+{#                    <option value="None">None</option>#}
+{#                    <option value="priceasc">price low to high</option>#}
+{#                    <option value="priceasc">price high to low</option>#}
+{#                    <option value="date">latest</option>#}
+{#                </select>#}
+                <p>   </p>
+            </div>
+        </div>
+
+        <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+          acc[i].onclick = function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+              panel.style.maxHeight = null;
+            } else {
+              panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+          }
+        }
+        </script>
+    </form>
+
     {% if post_list %}
         <h3>Filter Product</h3>
         <div class="controls">
-        <button type="button" data-filter="all" class="btn">Show All</button>
-        {% for category in categories %}
-            <button type="button" data-filter=".{{ category }}" class="btn">{{ category }}</button>
-        {% endfor %}
+        <table>
+            <tr>
+                <td><h5 style="display: inline-block">Sorting</h5></td>
+                <td>
+                    <button type="button" class="control btn" data-sort="published-date:desc">Latest</button>
+                    <button type="button" class="btn" data-sort="price:asc">Sort by price (low to high)</button>
+                    <button type="button" class="btn" data-sort="price:desc">Sort by price (high to low)</button>
+                </td>
+            </tr>
+            <tr>
+                <td><h5 style="display: inline-block">Filter by Category</h5></td>
+                <td>
+                    <button type="button" data-filter="all" class="btn">Show All</button>
+                    {% for category in categories %}
+                        <button type="button" data-filter=".{{ category }}" class="btn">{{ category }}</button>
+                    {% endfor %}
+                </td>
+
+            </tr>
+        </table>
+
+            <div>
+
+            </div>
         </div>
-   <h3>Here is what we find</h3>
+   <h3 style="margin: 20px 0 20px 0">Here is what we find</h3>
    <div class="row">
        <div class="mixcontainer">
        {% for post in post_list %}
-          <div class="col-sm-4 mix {{ post.category }}">
+          <div class="col-sm-4 mix {{ post.category }}" data-published-date="{{ post.p_date }}" data-price="{{ post.price }}">
             <div class="thumbnail">
               <img class="product-list-pic" src="{{ post.product_pic_link }}" alt="WELCOME TO SUTD" style="height: 200px;">
               <p><strong>{{ post.p_name }}</strong></p>
