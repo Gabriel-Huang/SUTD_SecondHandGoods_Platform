@@ -110,7 +110,7 @@ The page will be directed to the registration page where you can sign up as a ne
 
 ![alt text](../master/screenshots/2.png)
 
-After you click `Sign Up`, you will be directed back to homepage and you can see you have login as you user name on the navigation bar (`Hi, TestUser!`).
+After you click `Sign Up`, you will be directed back to homepage and you can see you have login as you user name on the navigation bar `Hi, TestUser!`.
 
 ![alt text](../master/screenshots/3.png)
 
