@@ -6,7 +6,7 @@ from django.forms.extras.widgets import SelectDateWidget
 # BIRTH_YEAR_CHOICES = ('1980', '1981', '1982')
 CHOICES = (('1', 'accept'), ('2', 'decline'))
 CATEGORY_CHOICE = (('e device','Electronic Device'),('Health&Beauty','Health & Beauty'), ('fashion', 'Fashion'), ('Sports', 'Sports'),
-('Groceries', 'Groceries'), ('food','Food'), ('others','Others')
+('Groceries', 'Groceries'), ('food','Food'), ('book', 'Book'), ('stationary', 'Stationary'),('others','Others')
 )
 # FAVORITE_COLORS_CHOICES = (('blue', 'Blue'),
 #                             ('green', 'Green'),
@@ -14,11 +14,11 @@ CATEGORY_CHOICE = (('e device','Electronic Device'),('Health&Beauty','Health & B
 
 class postForm(forms.Form):
     productname  = forms.CharField(required = True, max_length = 100)
-    description  = forms.CharField(required = True, max_length = 200)
     price = forms.FloatField(required = True)
     quantity = forms.IntegerField(required = True)
     category = forms.ChoiceField(required=True,
          widget=RadioSelect, choices=CATEGORY_CHOICE)
+    description  = forms.CharField(required = True, max_length = 200, widget=forms.Textarea)
     pic = forms.FileField(required = True)
 
 class OrderForm(forms.Form):
@@ -31,3 +31,9 @@ class OrderForm(forms.Form):
 
 class conformationForm(forms.Form):
     Options = ChoiceField(widget=RadioSelect, choices=CHOICES)
+
+class updateForm(forms.Form):
+
+    new_price = forms.FloatField(required = True)
+    new_quantity = forms.IntegerField(required = True)
+    new_description  = forms.CharField(required = True, max_length = 200, widget=forms.Textarea)

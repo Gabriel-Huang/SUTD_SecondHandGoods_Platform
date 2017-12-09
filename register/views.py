@@ -28,7 +28,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def signin(request):
-    
+
     if request.method == 'POST':
         form = signinForm(request.POST)
         if form.is_valid():
@@ -79,12 +79,14 @@ def profile(request):
     template = 'profile.html'
     with connection.cursor() as cursor:
 
+
+
         cursor.execute("SELECT profile_pic FROM auth_user WHERE username = %s", [user])
         profile_pic = dictfetchall(cursor)[0]
 
         profile_pic['upload_url'] = '/accounts/profile_pic'
 
-        cursor.execute("SELECT p_name FROM Product WHERE sellerid = %s", [user])
+        cursor.execute("SELECT p_id, p_name, product_pic_link, p_quantity FROM Product WHERE sellerid = %s", [user])
         row = dictfetchall(cursor)
 
         cursor.execute('''SELECT o_id, productid, product_pic_link, o_quantity, buyerid, o_date, trade_result
@@ -94,6 +96,9 @@ def profile(request):
         cursor.execute('''SELECT p_id, p_name, productseller, product_pic_link, o_id, productid, o_quantity, buyerid, o_date, trade_result
                     FROM OrderRecord, Product WHERE buyerid = %s and p_id = productid''', [user])
         order_record = dictfetchall(cursor)
+
+        for prod in row:
+            prod['update_url'] = '/products/update/%s'%prod['p_id']
 
         for record in sell_record:
             url = '/products/conformation/%s'%record['o_id']

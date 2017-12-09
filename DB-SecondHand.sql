@@ -18,7 +18,7 @@ Create Table Product ( 	#added column category
     p_description Text(500),
     p_date DATETIME,
     product_pic_link Text,
-    category Text,
+    category Text DEFAULT 'others',
     price float,
     primary key (p_id, sellerid),
     foreign key (sellerid) references auth_user(username));
