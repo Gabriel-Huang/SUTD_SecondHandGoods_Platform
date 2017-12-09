@@ -13,10 +13,10 @@ Implementation of an online marketplace for buying and selling new and secondhan
 - 3. Selling: After registration, a user can post his/her item onto the platform, with a specified name, price, quantity, category, and description. (contact info??) (categories are arranged in parent-child hierarchy: we will have some big categories on the top level and some small categories under each of them)
 - 4. Seller can edit product Info: (Arrival of more copies) Sellers are able to modify the quantity of the item that they are selling (School Concert ticket, 
 - 5. User record: upon user demand, following info will be printed:
-a.His/her account information
-b.His/her full history of orders (product name, price, order quantity, order date)
-c.His/her full history of feedbacks
-d.List of all the feedback he/she ranked with respect to usefulness
++ His/her account information
++ His/her full history of orders (product name, price, order quantity, order date)
++ His/her full history of feedbacks
++ List of all the feedback he/she ranked with respect to usefulness
 - 6.	Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
 - 7.	Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 0,1 or 2)
 > 8.	Goods browsing: Users can browse through items by selecting a specific category. A user can also specify that the results are to be sorted by price or average rating of the seller. We may also implement a keyword searching interface to make the search result more concrete.
