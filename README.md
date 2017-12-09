@@ -8,15 +8,19 @@ Huang Jiahui 10014 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 1001417
 ### 1. Topic:
 Implementation of an online marketplace for buying and selling new and secondhand goods among SUTD. Create a web application with a database backend using Django that implements features described below. The server can run both on local machine and online.
 ### 2. Features to be included (equivalent to the original topic):
-- 1. Registration: Login-name(unique), password. (Use Django’s auth mode and session DB module for this.)
-- 2. Ordering: After registration, a user can order items that are available on the platform. (multiple copies, multiple times of ordering)
-- 3. Selling: After registration, a user can post his/her item onto the platform, with a specified name, price, quantity, category, and description. (contact info??) (categories are arranged in parent-child hierarchy: we will have some big categories on the top level and some small categories under each of them)
+
+1. Registration: Login-name(unique), password. (Use Django’s auth mode and session DB module for this.)
+2. Ordering: After registration, a user can order items that are available on the platform. One user can only buy one product at one time.(Enable multiple copies, multiple times of ordering)
+3. User record: 
+Upon user demand, the full record of a user can be seen from the user profile page: 
+    1. his/her account information
+    2. his/her full history of orders (product name, seller name and order status)
+    3. his/her full history of feedbacks
+    4. the list of all the feedbacks he/she ranked with respect to usefulness
+    5. If the user is a seller:
+    * his/her product list with selling status and record
+    * Feedbacks he/she get from other users 
 - 4. Seller can edit product Info: (Arrival of more copies) Sellers are able to modify the quantity of the item that they are selling (School Concert ticket, 
-- 5. User record: upon user demand, following info will be printed:
-+ His/her account information
-+ His/her full history of orders (product name, price, order quantity, order date)
-+ His/her full history of feedbacks
-+ List of all the feedback he/she ranked with respect to usefulness
 - 6.	Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
 - 7.	Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 0,1 or 2)
 > 8.	Goods browsing: Users can browse through items by selecting a specific category. A user can also specify that the results are to be sorted by price or average rating of the seller. We may also implement a keyword searching interface to make the search result more concrete.
