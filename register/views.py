@@ -2,12 +2,13 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from .forms import signinForm, commentForm
+from .forms import signinForm, commentForm, profile_picForm
 from django.db import connection
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
+from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
 from datetime import *
 
@@ -27,6 +28,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def signin(request):
+    
     if request.method == 'POST':
         form = signinForm(request.POST)
         if form.is_valid():
@@ -44,10 +46,44 @@ def signout(request):
     return redirect('home')
 
 @login_required
+def profile_pic(request):
+
+    user = request.user
+    success = {'success': 1}
+
+    if request.method == 'POST':
+        form = profile_picForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            myfile = request.FILES['photo']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+
+            with connection.cursor() as cursor:
+
+                cursor.execute('''UPDATE auth_user
+                set profile_pic = %s where username = %s;''', [uploaded_file_url, user])
+                row = cursor.fetchall()
+
+            return render(request, 'profile_pic.html', success)
+    else:
+        form = profile_picForm()
+    return render(request, 'profile_pic.html', {'form': form})
+
+
+
+@login_required
 def profile(request):
     user = request.user
     template = 'profile.html'
     with connection.cursor() as cursor:
+
+        cursor.execute("SELECT profile_pic FROM auth_user WHERE username = %s", [user])
+        profile_pic = dictfetchall(cursor)[0]
+
+        profile_pic['upload_url'] = '/accounts/profile_pic'
+
         cursor.execute("SELECT p_name FROM Product WHERE sellerid = %s", [user])
         row = dictfetchall(cursor)
 
@@ -94,7 +130,8 @@ def profile(request):
     context = {'product_list': row,
                'comment_list': comment_list,
                'sell_record': sell_record,
-               'order_record': order_record}
+               'order_record': order_record,
+               'profile_pic' : profile_pic}
     return render(request, template, context)
 
 @login_required

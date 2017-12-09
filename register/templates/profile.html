@@ -11,17 +11,16 @@
 
 {% block jumbotron %}
     <div class="jumbotron">
-      <h1>Here is your product</h1>
-      {% for product in product_list %}
-        <li>{{product.p_name}}</li>
-      {% endfor %}
+      <h2>Hi {{user.username}}</h2>
+          <img src="{{ profile_pic.profile_pic }}" width="150px" height="150px">
+          <a href="{{ profile_pic.upload_url }}" class="btn" role="button"><strong>upload profile photo</strong></a>
     </div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
                     <h3>Purchase Record</h3>
                     <hr>
-                    <ul class=list-group">
+                    <ul class=list-group>
                         {% for record in order_record %}
                         {% if record.trade_result == "Succeed!" %}
                             <li class="list-group-item justify-content-between">
@@ -64,7 +63,7 @@
                     <h3>Selling Record</h3>
                     <hr>
                     {% for record in sell_record %}
-                        <ul class=list-group">
+                        <ul class=list-group>
                         {% if record.trade_result == 1 %}
                             <li class="list-group-item justify-content-between list-group-item-success">
                                 <div class="row">
