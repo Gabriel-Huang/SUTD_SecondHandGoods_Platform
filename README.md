@@ -1,6 +1,6 @@
 # DB-Project
 An online Second-hand goods trading platform for students in SUTD. A development of database-based system with Django.
-
+![alt text](https://raw.githubusercontent.com/CreoleLady/DB-Project/master/path/to/l.jpg)
 ## Group Members:
 Huang Jiahui 10014 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 1001417 | Zhang Jiaxuan 10014
 
