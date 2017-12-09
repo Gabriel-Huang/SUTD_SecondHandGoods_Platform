@@ -78,9 +78,6 @@ def profile(request):
     user = request.user
     template = 'profile.html'
     with connection.cursor() as cursor:
-
-
-
         cursor.execute("SELECT profile_pic FROM auth_user WHERE username = %s", [user])
         profile_pic = dictfetchall(cursor)[0]
 
@@ -150,6 +147,8 @@ def profile(request):
                 comment_list += [comment]
         for comment in comment_list:
             comment['date_ago'] = (datetime.now().date() - comment['f_date']).days
+            cursor.execute("SELECT profile_pic FROM auth_user WHERE username = %s ", [comment['FeedbackUser']])
+            comment['profile_pic'] = cursor.fetchall()[0][0]
 
     context = {'product_list': row,
                'comment_list': comment_list,

@@ -1,3 +1,9 @@
+.panel-default > .panel-heading {
+  color: #333;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+}
+
 /* accodrion */
 button.accordion {
     margin: 20px;
@@ -28,7 +34,7 @@ button.accordion.active:after {
     content: "\2212";
 }
 
-div.panel {
+#panelcollapse {
     padding: 0 18px 0;
     background-color: white;
     max-height: 0;
@@ -302,7 +308,7 @@ textarea:focus{
     z-index: 99; /* Make sure it does not overlap */
     border: none; /* Remove borders */
     outline: none; /* Remove outline */
-    background-color: #ffffff; /* Set a background color */
+    background-color: transparent; /* Set a background color */
     color: white; /* Text color */
     cursor: pointer; /* Add a mouse pointer on hover */
 }

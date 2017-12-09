@@ -18,7 +18,7 @@
          <input type="search" class="search-box rounded" placeholder="Search Anything You Want..." name="content" required><button type="submit" id="search-icon"><img src="{% static "images/search.png" %}" style="width: 40px;height: 40px"></button>
         <div>
             <a class="accordion" role="button"><h4>Search With Criteria</h4></a>
-            <div class="panel">
+            <div class="panel" id="panelcollapse">
                 <label>Seller: </label><input name="sellername" type="text">
                 <label>Category: </label>
                 <select name="category">
@@ -31,13 +31,6 @@
                 <input type="date" name="startdate">
                 <label>End Date: </label>
                 <input type="date" name="enddate">
-{#                <label>Sort By: </label>#}
-{#                <select name="sortby">#}
-{#                    <option value="None">None</option>#}
-{#                    <option value="priceasc">price low to high</option>#}
-{#                    <option value="priceasc">price high to low</option>#}
-{#                    <option value="date">latest</option>#}
-{#                </select>#}
                 <p>   </p>
             </div>
         </div>

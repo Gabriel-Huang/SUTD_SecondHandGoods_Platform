@@ -106,7 +106,6 @@ def search(request):
     if startdate is not "" and enddate is not "":
         query_sentence += "and p_date Between %s AND %s"
         query_list += [startdate + " 00:00:00", enddate + " 23:59:59"]
-    print query_sentence
 
     with connection.cursor() as cursor:
         cursor.execute(query_sentence, query_list)
@@ -158,14 +157,12 @@ def user_view(request, pk):
                         "ORDER BY score DESC) AS F ",
                        [pk])
         comment_list = dictfetchall(cursor)
-        print comment_list
         cursor.execute("SELECT FeedbackUser, f_content, f_date, f_id, p_name, p_id "
                        "FROM Feedback, Product "
                        "WHERE Seller = %s "
                        "AND Feedback.Product = Product.p_id",
                        [pk])
         comment_list2 = dictfetchall(cursor)
-        print comment_list2
         comment_ids = set()
         for comment in comment_list:
             comment_ids.add(comment['f_id'])
@@ -183,6 +180,9 @@ def user_view(request, pk):
                 comment['current_rating'] = 0
             else:
                 comment['current_rating'] = rating_value[0]['r_score']
+        for comment in comment_list:
+            cursor.execute("SELECT profile_pic FROM auth_user WHERE username = %s ", [comment['FeedbackUser']])
+            comment['profile_pic'] = cursor.fetchall()[0][0]
 
         for product in products:
             product['detial'] = '/products/detials/%s' %product['p_id']
@@ -191,6 +191,7 @@ def user_view(request, pk):
                'comment_list': comment_list,
                'seller': seller}
     return render(request, template, context)
+
 
 def stats(request):
     with connection.cursor() as cursor:
