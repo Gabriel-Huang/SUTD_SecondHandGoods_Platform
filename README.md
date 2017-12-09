@@ -1,7 +1,7 @@
 # DB-Project
 An online Second-hand goods trading platform for students in SUTD. A development of database-based system with Django.
 
-![alt text](DB-Project/1.png)
+![alt text](../master/1.png)
 ## Group Members:
 Huang Jiahui 10014 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 1001417 | Zhang Jiaxuan 10014
 
