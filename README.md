@@ -104,7 +104,7 @@ Our recommendation system takes every user's search history. Then for each searc
 
 After getting into the homepage, you can see how our website looks like and register as a new user by clicking on the `Register` button on the navigation bar. 
 
-![alt text](../master/1.png)
+![alt text](../master/screenshots/1.png)
 
 The page will be directed to the registration page where you can sign up as a new user by entering the user name and an appropriate password.
 
