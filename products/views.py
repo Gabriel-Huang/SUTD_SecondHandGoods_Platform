@@ -184,7 +184,6 @@ def conformation(request, pk):
                 cursor.execute('''UPDATE OrderRecord SET trade_result = %s where
                 o_id = %s''',(result, pk))
                 # if success, cut product quantity by one
-                print type(int(result))
                 if int(result) == 1:
                     cursor.execute('''UPDATE Product SET p_quantity = p_quantity - %s where
                     p_id = %s''',(sell_record['o_quantity'], product_id))

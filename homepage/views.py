@@ -160,8 +160,6 @@ def stats(request):
             LIMIT 5) AS COUNT;''')
 
         pop_seller = dictfetchall(cursor)
-
-    print pop_product
     for i in range(len(pop_product)):
         url = '/products/detials/%s'%pop_product[i]['p_id']
         pop_product[i]['url'] = url
