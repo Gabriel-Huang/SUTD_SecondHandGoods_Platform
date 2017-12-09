@@ -1,7 +1,7 @@
 # DB-Project
 An online Second-hand goods trading platform for students in SUTD. A development of database-based system with Django.
 
-![alt text](../master/1.png)
+
 ## Group Members:
 Huang Jiahui 10014 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 1001417 | Zhang Jiaxuan 10014
 
@@ -99,7 +99,18 @@ Our recommendation system takes every user's search history. Then for each searc
 *	List of 5 most popular items
 * Average ratings for each given comment
 
+### 8. Demonstration
+#### Register
 
+After getting into the homepage, you can see how our website looks like and register as a new user by clicking on the `Register` button on the navigation bar. 
 
+![alt text](../master/1.png)
 
+The page will be directed to the registration page where you can sign up as a new user by entering the user name and an appropriate password.
+
+![alt text](../master/2.png)
+
+After you click `Sign Up`, you will be directed back to homepage and you can see you have login as you user name on the navigation bar (`Hi TestUser!`).
+
+![alt text](../master/3.png)
 
