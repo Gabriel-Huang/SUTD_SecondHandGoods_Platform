@@ -18,8 +18,8 @@ Upon user demand, the full record of a user can be seen from the user profile pa
     3. his/her full history of feedbacks
     4. the list of all the feedbacks he/she ranked with respect to usefulness
     5. If the user is a seller:
-    * his/her product list with selling status and record
-    * Feedbacks he/she get from other users 
+        * his/her product list with selling status and record
+        * Feedbacks he/she get from other users 
 - 4. Seller can edit product Info: (Arrival of more copies) Sellers are able to modify the quantity of the item that they are selling (School Concert ticket, 
 - 6.	Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
 - 7.	Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 0,1 or 2)
