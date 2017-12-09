@@ -7,6 +7,8 @@ use platform;
 --     user_pic_link Char(50),
 -- 	primary key (u_id));--
 
+alter table auth_user add column profile_pic varchar(150) default '/media/default.jpg';
+
 
 Create Table Product ( 	#added column category
 	p_id Integer,

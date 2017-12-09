@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% if success %}
+
+    {% url 'home' as home %}
+
+    <p><strong>Succeed !</strong></p>
+    <p>Go back to <a href="{% url 'home' %}">homepage</a></p>
+
+    {% else %}
+        <h2>Upload new profile photo</h2>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn">upload!</button>
+        </form>
+
+    {% endif %}
+    
+{% endblock %}

@@ -12,3 +12,6 @@ class signinForm(forms.Form):
 
 class commentForm(forms.Form):
     comments = forms.CharField(required = True, max_length = 250, widget=forms.Textarea)
+
+class profile_picForm(forms.Form):
+    photo = forms.FileField(required = True)
