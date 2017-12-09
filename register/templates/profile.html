@@ -4,16 +4,20 @@
 <style>
 .jumbotron{
     text-align: center;
+    background-color: #0f0f0f;
 }
+
 
 </style>
 {% endblock %}
 
 {% block jumbotron %}
     <div class="jumbotron">
-      <h2>Hi {{user.username}}</h2>
-          <img src="{{ profile_pic.profile_pic }}" width="150px" height="150px">
-          <a href="{{ profile_pic.upload_url }}" class="btn" role="button"><strong>upload profile photo</strong></a>
+      <h2 style="color: white">Hi {{user.username}}</h2>
+          <img src="{{ profile_pic.profile_pic }}" style="max-height: 250px; max-width: 500px; min-height: 150px">
+          <div>
+             <a href="{{ profile_pic.upload_url }}" class="btn" role="button"><strong>upload/update profile photo</strong></a>
+          </div>
     </div>
         <div class="container">
             <div class="row">

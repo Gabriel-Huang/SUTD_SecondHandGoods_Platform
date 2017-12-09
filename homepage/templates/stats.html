@@ -3,11 +3,11 @@
 {% block content %}
 
 <div class="row">
-<h1>Popular Products</h1><hr>
+<h2>Popular Products</h2><hr>
  {% for product in pop_product %}
      <div class="col-sm-4">
         <div class="thumbnail">
-          <img class="product-list-pic" src="{{ product.product_pic_link }}" alt="IMAGE NOT FOUND">
+          <img class="product-list-pic" src="{{ product.product_pic_link }}" alt="IMAGE NOT FOUND" style="height: 200px;max-width: 100%">
           <p><strong>{{ product.p_name }}</strong></p>
           <p>Seller: {{ product.sellerid }}</p>
             <a href="{{ product.url }}" class="btn" role="button">Buy Now</a>
@@ -18,7 +18,7 @@
 
 
 <div class="col-md-3">
-    <h3>Popular Seller</h3>
+    <h2>Popular Seller</h2>
     <hr>
     {% if pop_seller %}
     <ol class="list-group">

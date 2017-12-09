@@ -1,19 +1,16 @@
+{% load staticfiles %}
 <div>
     <footer>
         <div id="footer">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3 text-center">
-                        <p>Copyright SUTD 50.008 Database. All Rights Reserved. <br>Made with <i class="icon-heart3 love"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
-                        <p class="fh5co-social-icons">
-                            <a href="#"><i class="icon-twitter-with-circle"></i></a>
-                            <a href="#"><i class="icon-facebook-with-circle"></i></a>
-                            <a href="#"><i class="icon-instagram-with-circle"></i></a>
-                        </p>
+                        <p>Copyright SUTD 50.008 Database. All Rights Reserved.</p>
+                        <img src="{% static "images/sutd-logo.png" %}" style="height: 100px">
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 </div>
-<button id="backToTopBtn" title="Go to top">Top</button>
+<button id="backToTopBtn" title="Go to top"><img src="{% static "images/top.png" %}" style="height: 30px; width: 30px"></button>
