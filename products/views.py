@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .forms import postForm, OrderForm, conformationForm
+from .forms import postForm, OrderForm, conformationForm, updateForm
 from django.shortcuts import render
 from django.db import connection
 from django.contrib.auth.decorators import login_required
@@ -82,6 +82,56 @@ def post(request):
     else:
         form = postForm()
     return render(request, template, {'form': form})
+
+
+@login_required
+def update(request, pk):
+
+        template = 'update.html'
+        success = {'success': 1}
+        detials = {}
+
+        with connection.cursor() as cursor:
+            cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid,
+            p_quantity, p_description, p_date, price
+            FROM Product where p_id = %s;'''%pk)
+            row = cursor.fetchall()[0]
+
+        pid = row[0]
+        detials['name'] = row[1]
+        detials['order_url'] = '/products/order/%s'%pk
+        detials['pic_link'] = row[2]
+        seller = row[3]
+        user_url = '/homepage/user/%s'%seller
+        detials['user_url'] = user_url
+        detials['seller'] = seller
+        detials['quantity'] = row[4]
+        detials['description'] = row[5]
+        detials['date']= row[6]
+        detials['price'] = row[7]
+
+        if request.method == 'POST':
+            form = updateForm(request.POST)
+            if form.is_valid():
+
+                discription = form.cleaned_data.get('new_description')
+                quantity = int(form.cleaned_data.get('new_quantity'))
+                price = form.cleaned_data.get('new_price')
+
+                with connection.cursor() as cursor:
+                        cursor.execute('''UPDATE  Product
+                        set p_quantity = %s, p_description = %s, price = %s
+                        where p_id = %s;''',
+                        (quantity, discription, price, pk))
+                return render(request, 'update.html', success)
+
+        else:
+            form = updateForm()
+
+        context = {'detial': detials, 'form': form}
+        return render(request, template, context)
+
+
 
 @login_required
 def order(request, pk):
