@@ -66,16 +66,16 @@ def post(request):
                 row = cursor.fetchall()
 
                 if row == ():
-                    cursor.execute('''INSERT INTO Product (p_id, sellerid, sellername,
+                    cursor.execute('''INSERT INTO Product (p_id, sellerid,
                     p_name, p_quantity, p_description, p_date, product_pic_link, category, price) values
-                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (0, user, '',
+                    (%s, %s, %s, %s, %s, %s, %s, %s, %s);''', (0, user,
                     productname, quantity, discription, now, uploaded_file_url, category, price))
 
                 else:
                     pid = int(row[0][0]) + 1
-                    cursor.execute('''INSERT INTO Product (p_id, sellerid, sellername,
+                    cursor.execute('''INSERT INTO Product (p_id, sellerid,
                     p_name, p_quantity, p_description, p_date, product_pic_link, category, price) values
-                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (pid, user, '',
+                    (%s, %s, %s, %s, %s, %s, %s, %s, %s);''', (pid, user,
                     productname, quantity, discription, now, uploaded_file_url, category, price))
             return render(request, 'post.html', success)
 
