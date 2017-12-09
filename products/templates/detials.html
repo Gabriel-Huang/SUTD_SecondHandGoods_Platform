@@ -1,26 +1,42 @@
 {% extends 'base.html' %}
-
+{% block styles %}
+{% endblock %}
 {% block content %}
-    <h1>{{ detial.name }}</h1>
-    <p><img src="{{ detial.pic_link }}" /></p>
-    <p><strong>Seller:</strong> <a href="{{ detial.user_url }}">{{ detial.seller }}</a></p> <!-- author detail link not yet defined -->
-    <p><strong>Detials:</strong> {{ detial.description }}</p>
-    <p><strong>Date:</strong> {{ detial.date }}</p>
-    {% if detial.quantity > 0 %}
-        <p><strong>Quantity:</strong> {{ detial.quantity }}</p>
-        <p><strong>Price:</strong> {{ detial.price }}</p>
+    <div class="container product">
+        <div class="left-column">
+            <img src="{{ detial.pic_link }}" alt="">
+        </div>
+        <div class="right-column">
+            <!-- Product Description -->
+            <div class="product-description">
+              <span>{{ detial.category }}</span><span style="float: right">{{ detial.date }}</span>
+              <h1>{{ detial.name }}</h1>
+              <p>{{ detial.description }}</p>
+            </div>
 
-        {% if denied %}
+            <p><strong>Seller:</strong> <a href="{{ detial.user_url }}">{{ detial.seller }}</a></p> <!-- author detail link not yet defined -->
 
-            <p><strong>This is your own product</strong></p>
-            
-        {% else %}
+            {% if detial.quantity > 0 %}
+                <p><strong>Quantity:</strong> {{ detial.quantity }}</p>
 
-            <p><a href="{{ detial.order_url }}"><strong>Buy!!!</strong></a></p>
+                {% if denied %}
 
-        {% endif %}
+                    <p><strong>This is your own product</strong></p>
 
-    {% else %}
-        <p><strong>SOLD OUT!</strong>
-    {% endif %}
+                {% else %}
+                    <!-- Product Pricing -->
+                    <div class="product-price">
+                      <span>{{ detial.price }}$</span>
+                    </div>
+                    <a href="{{ detial.order_url }}" role="button" class="cart-btn">Buy!!!</a>
+
+                {% endif %}
+
+            {% else %}
+                <button class="cart-btn" type="button" disabled style="background-color: gray">SOLD OUT!</button>
+            {% endif %}
+        </div>
+
+    </div>
+
 {% endblock %}

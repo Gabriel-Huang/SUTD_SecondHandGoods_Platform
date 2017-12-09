@@ -5,14 +5,14 @@ use platform;
 --     password Char(20),
 --     email Text(50),
 --     user_pic_link Char(50),
--- 	primary key (u_id));-- 
+-- 	primary key (u_id));--
 
 
 Create Table Product ( 	#added column category
 	p_id Integer,
     sellerid varchar(150),
     p_name Char(100),
-    p_quantity Integer, 
+    p_quantity Integer,
     p_description Text(500),
     p_date DATETIME,
     product_pic_link Text,
@@ -35,7 +35,7 @@ Create Table OrderRecord (
     foreign key (productid, productseller) references Product(p_id, sellerid),
     foreign key (buyerid) references auth_user(username));
 
-    
+
 Create Table Feedback (
 	f_id Integer,
     FeedbackUser varchar (150),
@@ -48,9 +48,9 @@ Create Table Feedback (
     primary key (f_id),
     foreign key (FeedbackUser) references auth_user(username),
     foreign key (Product, Seller) references Product (p_id, sellerid));
-    
 
-    
+
+
 Create Table Rating (
 	r_id Integer,
     r_score Integer check (r_score = 0 or r_score = 1 or r_score = 2),
@@ -64,8 +64,8 @@ Create Table Rating (
     foreign key (RatingUser) references auth_user(username),
     foreign key (Feedback_id) references Feedback (f_id),
     foreign key (FeedbackUser, FeedbackProduct) references Feedback (FeedbackUser, Product),
-    Check (RaringUser <> FeedbackUser)); 
-    
+    Check (RaringUser <> FeedbackUser));
+
 Create Table Search_Record(
 	user varchar(150),
     content varchar(300),
@@ -84,7 +84,7 @@ for each row
 begin
 	if new.p_quantity = 0 then
 	update OrderRecord set trade_result = 2
-	where OrderRecord.productid = new.p_id 
+	where OrderRecord.productid = new.p_id
 	and trade_result = 0;
 	end if;
 end;

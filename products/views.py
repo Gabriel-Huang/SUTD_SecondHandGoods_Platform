@@ -17,7 +17,7 @@ def detials(request, pk):
 
     with connection.cursor() as cursor:
         cursor.execute('''SELECT p_id, p_name, product_pic_link, sellerid,
-        p_quantity, p_description, p_date, price
+        p_quantity, p_description, p_date, price, category
         FROM Product where p_id = %s;'''%pk)
         row = cursor.fetchall()[0]
 
@@ -32,6 +32,7 @@ def detials(request, pk):
     detials['description'] = row[5]
     detials['date']= row[6]
     detials['price'] = row[7]
+    detials['category'] = row[8]
 
     if seller == user.username:
         context['denied'] = 1

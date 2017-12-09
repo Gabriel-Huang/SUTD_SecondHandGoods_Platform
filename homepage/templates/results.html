@@ -9,16 +9,7 @@
         {% for category in categories %}
             <button type="button" data-filter=".{{ category }}" class="btn">{{ category }}</button>
         {% endfor %}
-            <button type="button" data-filter=".other" class="btn">None</button>
         </div>
-
-        <div class="controls">
-        {% for category in categories %}
-            <button type="button" data-filter=".{{ category }}" class="btn">{{ category }}</button>
-        {% endfor %}
-            <button type="button" data-filter=".other" class="btn">None</button>
-        </div>
-
    <h3>Here is what we find</h3>
    <div class="row">
        <div class="mixcontainer">
@@ -28,7 +19,7 @@
               <img class="product-list-pic" src="{{ post.product_pic_link }}" alt="WELCOME TO SUTD">
               <p><strong>{{ post.p_name }}</strong></p>
               <p>Seller: {{ post.sellerid }}</p>
-              <button class="btn" href="{{ product.url }}">Buy Now</button>
+                <a href="{{ post.detail }}" class="btn" role="button">Buy Now</a>
             </div>
           </div>
        {% endfor %}
@@ -38,8 +29,6 @@
         <h3>Sorry, No Matched Result</h3>
     {% endif %}
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.2.2/mixitup.min.js"></script>
     <script>
         var containerEl = document.querySelector('.mixcontainer');
         var mixer = mixitup(containerEl, {
