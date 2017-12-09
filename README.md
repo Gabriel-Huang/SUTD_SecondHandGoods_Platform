@@ -7,11 +7,13 @@ Huang Jiahui 10014 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 1001417
 ## Project Proposal & Requirements
 ### 1. Topic:
 Implementation of an online marketplace for buying and selling new and secondhand goods among SUTD. Create a web application with a database backend using Django that implements features described below. The server can run both on local machine and online.
-### 2. Features to be included (equivalent to the original topic):
 
-1. Registration: Login-name(unique), password. (Use Django’s auth mode and session DB module for this.)
-2. Ordering: After registration, a user can order items that are available on the platform. One user can only buy one product at one time.(Enable multiple copies, multiple times of ordering)
-3. User record: 
+### 2. Features to be included (equivalent to the original topic):
+1. (5 pts) Registration: Login-name(unique), password. (Use Django’s auth mode and session DB module for this.)
+2. (5 pts) Ordering: After registration, a user can order items that are available on the platform. One user can only buy one product at one time.(Enable multiple copies, multiple times of ordering)
+4. (2 pts) Selling: After registration, a user can post his/her item onto the platform, with a specified name, price, quantity, category, and description.(One product has one category.)
+4. (3 pts) Seller can edit product Info: (Arrival of more copies) Most second hand products only has quantity of one. Still, sellers are able to modify the quantity of the item that they are selling after uploading the product. (Eg. School Concert ticket)
+3. (15 pts) User record: 
 Upon user demand, the full record of a user can be seen from the user profile page: 
     1. his/her account information
     2. his/her full history of orders (product name, seller name and order status)
@@ -20,16 +22,16 @@ Upon user demand, the full record of a user can be seen from the user profile pa
     5. If the user is a seller:
         * his/her product list with selling status and record
         * Feedbacks he/she get from other users 
-- 4. Seller can edit product Info: (Arrival of more copies) Sellers are able to modify the quantity of the item that they are selling (School Concert ticket, 
-- 6.	Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
-- 7.	Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 0,1 or 2)
-> 8.	Goods browsing: Users can browse through items by selecting a specific category. A user can also specify that the results are to be sorted by price or average rating of the seller. We may also implement a keyword searching interface to make the search result more concrete.
-> 9.	Useful feedback: Comments are displayed on a seller’s profile in the order of ratings, highest on the top and lowest at the bottom.
-> 10.	Goods recommendation: We will implement Machine Learning Algorithms to build a recommendation system. 
-Like most e-commerce websites, when a user orders a copy of book A, your system should give a list of other suggested books. Book B is suggested, if there exist a user X that bought both A and B. The suggested books should be sorted on decreasing sales count (i.e., most popular first); count only sales to users like X (i.e. the users who bought both A and B).
-> 11.	Statistics: Every month we will provide the information of:
-a.	list of n most popular sellers (in terms of items sold in this month)
-b.	the list of m most popular categories
+
+6. (2.5) Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
+7. (2.5) Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 1, 2 ,3, 4 or 5)
+8. (20 pts)	Product browsing: Users can browse through items by selecting a specific category. A user can also specify that the results are to be sorted by price or average rating of the seller. We may also implement a keyword searching interface to make the search result more concrete.
+9.	(5 pts) Useful feedback: Comments are displayed on a seller’s profile in the order of average usefulness score for feedbacks, highest on the top and lowest at the bottom.
+10.	(10 pts) Product recommendation: Due to the specialness of second-hand products, most products only have one piece. Therefore, it is not approperiate to recommand products based on user's order history. The reason is, at most circumstances, the product will be out of stock after one successful order. In this case, we will not recommand products by analysing users with similar purchasing preference. Instead, we look into the search history of every user and recommand products based on the similarity score between search keywords and products. Recommendation products will be sorted on decreasing relevance. 
+11.	(10 pts) Statistics: Every month we will provide the information of:
+- list of n most popular sellers (in terms of items sold in this month)
+- the list of m most popular categories
+- the list of k most trutable users (They provided feedbacks with high usefulness score.)
 
 ## Environment Setup
 Make sure you have the following installed
