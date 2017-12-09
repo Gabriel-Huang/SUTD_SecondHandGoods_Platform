@@ -113,25 +113,58 @@ def search(request):
 def user_view(request, pk):
     if request.method == 'POST':
         rate = request.POST.get("rate", "")
+        rating_user = request.POST.get("rating_user", "")
         feedback_user = request.POST.get("feedback_user", "")
         product = request.POST.get("product", "")
         Feedback_id = request.POST.get("Feedback_id", "")
         with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO Rating VALUES (1, %s, %s, %s, 'gil1', %s, %s)",
-                           [rate, datetime.datetime.now().date(), feedback_user, product, Feedback_id])
+            cursor.execute("SELECT * FROM Rating ORDER BY r_id DESC LIMIT 1")
+            last_record = dictfetchall(cursor)
+            if not last_record:
+                last_id = 0
+            else:
+                last_id = last_record[0]["r_id"]
+
+            cursor.execute("INSERT INTO Rating VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                           [last_id + 1, rate, datetime.datetime.now().date(), rating_user, feedback_user, product, Feedback_id])
     template = 'profile_other.html'
     with connection.cursor() as cursor:
         cursor.execute("SELECT p_name, p_id, product_pic_link, p_quantity FROM Product WHERE sellerid = %s", [pk])
         products = dictfetchall(cursor)
-        cursor.execute("SELECT FeedbackUser, f_content, f_date, Product, f_id, p_name "
+        cursor.execute("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); ")
+        cursor.execute("SELECT F.f_id, p_id, p_name, F.f_date, F.f_content, F.FeedbackUser, score FROM("
+                        "SELECT p_id, p_name, Feedback.f_id, Feedback.f_date, Feedback.FeedbackUser, Feedback.f_content, AVG(Rating.r_score) AS score FROM Feedback, auth_user, Product, Rating "
+                        "WHERE Feedback.f_id = Rating.Feedback_id "
+                        "AND seller = %s "
+                        "GROUP BY Feedback.f_id "
+                        "ORDER BY score DESC) AS F ",
+                       [pk])
+        comment_list = dictfetchall(cursor)
+        print comment_list
+        cursor.execute("SELECT FeedbackUser, f_content, f_date, f_id, p_name, p_id "
                        "FROM Feedback, Product "
                        "WHERE Seller = %s "
                        "AND Feedback.Product = Product.p_id",
                        [pk])
-        comment_list = dictfetchall(cursor)
-
+        comment_list2 = dictfetchall(cursor)
+        print comment_list2
+        comment_ids = set()
+        for comment in comment_list:
+            comment_ids.add(comment['f_id'])
+        for comment in comment_list2:
+            if comment['f_id'] not in comment_ids:
+                comment['score'] = 'None'
+                comment_list += [comment]
         for comment in comment_list:
             comment['date_ago'] = (datetime.datetime.now().date() - comment['f_date']).days
+
+        for comment in comment_list:
+            cursor.execute("SELECT * FROM Rating WHERE Feedback_id = %s AND RatingUser = %s;", [int(comment['f_id']), request.user])
+            rating_value = dictfetchall(cursor)
+            if not rating_value:
+                comment['current_rating'] = 0
+            else:
+                comment['current_rating'] = rating_value[0]['r_score']
 
         for product in products:
             product['detial'] = '/products/detials/%s' %product['p_id']

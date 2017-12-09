@@ -58,7 +58,7 @@
                 <div class="col-sm-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <strong>{{ comment.FeedbackUser }}</strong> <span class="text-muted">commented {{ comment.date_ago }} days ago</span>
+                            <strong>{{ comment.FeedbackUser }}</strong> <span class="text-muted">commented {{ comment.date_ago }} days ago &#9658; {{ comment.p_name }}</span>
                         </div>
                         <div class="panel-body">
                             {{ comment.f_content }}
@@ -66,27 +66,44 @@
                         <div class="panel-footer">
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <p>Average Rating: 0</p>
+                                    <p>Average Rating: {{ comment.score }}</p>
                                 </div>
                                 <div class="col-sm-7" align="right">
-                                    <div id="rateYo{{ comment.f_id }}"></div>
-                                    <script>
-                                        $(function () {
-                                            var starrate = $("#rateYo{{ comment.f_id }}");
-                                            starrate = starrate.rateYo({
-                                                starWidth: "20px",
-                                                fullStar: true,
-                                            });
-                                            starrate.rateYo().on("rateyo.set", function (e, data) {
+                                    {% if comment.current_rating == 0 %}
+                                        <div id="rateYo{{ comment.f_id }}"></div>
+                                        <script>
+                                            $(function () {
+                                                var starrate = $("#rateYo{{ comment.f_id }}");
+                                                starrate = starrate.rateYo({
+                                                    starWidth: "20px",
+                                                    fullStar: true,
+                                                });
+                                                starrate.rateYo().on("rateyo.set", function (e, data) {
+                                                    starrate.rateYo("option", "readOnly", true);
+                                                    $.post(window.location.href, {rate: data['rating'],
+                                                        feedback_user:"{{ comment.FeedbackUser }}",
+                                                        rating_user:"{{ user.get_username }}",
+                                                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                                                        product: '{{ comment.p_id }}',
+                                                        Feedback_id: '{{ comment.f_id }}'});
+                                                });
+                                            })
+                                        </script>
+                                    {% else %}
+                                        <div id="rateYo{{ comment.f_id }}"></div>
+                                        <script>
+                                            $(function () {
+                                                var starrate = $("#rateYo{{ comment.f_id }}");
+                                                starrate = starrate.rateYo({
+                                                    rating    : {{ comment.current_rating }},
+                                                    starWidth: "20px",
+                                                    fullStar: true,
+                                                });
                                                 starrate.rateYo("option", "readOnly", true);
-                                                $.post(window.location.href, {rate: data['rating'],
-                                                    feedback_user:"{{ user.get_username }}",
-                                                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                                                    product: '{{ comment.Product }}',
-                                                    Feedback_id: '{{ comment.f_id }}'});
-                                            });
-                                        })
-                                    </script>
+                                            })
+                                        </script>
+                                    {% endif %}
+
                                 </div>
 
 

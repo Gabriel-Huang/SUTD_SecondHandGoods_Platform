@@ -16,7 +16,7 @@
        {% for post in post_list %}
           <div class="col-sm-4 mix {{ post.category }}">
             <div class="thumbnail">
-              <img class="product-list-pic" src="{{ post.product_pic_link }}" alt="WELCOME TO SUTD">
+              <img class="product-list-pic" src="{{ post.product_pic_link }}" alt="WELCOME TO SUTD" style="height: 200px;">
               <p><strong>{{ post.p_name }}</strong></p>
               <p>Seller: {{ post.sellerid }}</p>
                 <a href="{{ post.detail }}" class="btn" role="button">Buy Now</a>

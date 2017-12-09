@@ -20,7 +20,7 @@
 
     <div class="row">
         <div class="col-md-9">
-            <div id="carousel-main" class="carousel slide " data-ride="carousel" data-interval="5000">
+            <div id="carousel-main" class="carousel slide " data-ride="carousel" data-interval="3000">
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-main" data-slide-to="0" class="active"></li>
                     <li data-target="#carousel-main" data-slide-to="1"></li>
@@ -29,12 +29,12 @@
                 </ol>
                 <!-- Carousel items -->
                 <div class="carousel-inner">
-                    <div class="active item">
-                        <img src="{{ recommend1.product_pic_link }}" class="img-responsive">
+                    <div class="active item peopleCarouselImg">
+                        <img src="{{ recommend1.product_pic_link }}" class="img-responsive" style="width: 100%;height: 500px;max-height: 500px;">
                     </div>
                     {% for prod in recommend %}
-                    <div class="item">
-                        <img src="{{ prod.product_pic_link }}" class="img-responsive">
+                    <div class="item peopleCarouselImg">
+                        <img src="{{ prod.product_pic_link }}" class="img-responsive" style="width: 100%;height: 500px;max-height: 500px;">
                     </div>
                     {% endfor %}
                 </div>
@@ -75,7 +75,7 @@
      {% for product in products %}
          <div class="col-sm-4">
             <div class="thumbnail">
-              <img class="product-list-pic" src="{{ product.product_pic_link }}" alt="IMAGE NOT FOUND">
+              <img class="product-list-pic" src="{{ product.product_pic_link }}" alt="IMAGE NOT FOUND" style="height: 200px;max-width: 100%">
               <p><strong>{{ product.p_name }}</strong></p>
               <p>Seller: {{ product.sellerid }}</p>
                 <a href="{{ product.url }}" class="btn" role="button">Buy Now</a>

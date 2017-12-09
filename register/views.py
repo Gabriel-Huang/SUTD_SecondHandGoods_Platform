@@ -83,14 +83,33 @@ def profile(request):
             else:
                 record['trade_result'] = 'Still pending'
 
-        cursor.execute("SELECT FeedbackUser, f_content, f_date, Product, f_id, p_name "
+        cursor.execute("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); ")
+        cursor.execute("SELECT F.f_id, p_id, p_name, F.f_date, F.f_content, F.FeedbackUser, score FROM("
+                       "SELECT p_id, p_name, Feedback.f_id, Feedback.f_date, Feedback.FeedbackUser, Feedback.f_content, AVG(Rating.r_score) AS score FROM Feedback, auth_user, Product, Rating "
+                       "WHERE Feedback.f_id = Rating.Feedback_id "
+                       "AND seller = %s "
+                       "GROUP BY Feedback.f_id "
+                       "ORDER BY score DESC) AS F ",
+                       [user])
+        comment_list = dictfetchall(cursor)
+        print comment_list
+        cursor.execute("SELECT FeedbackUser, f_content, f_date, f_id, p_name, p_id "
                        "FROM Feedback, Product "
                        "WHERE Seller = %s "
                        "AND Feedback.Product = Product.p_id",
                        [user])
-        comment_list = dictfetchall(cursor)
+        comment_list2 = dictfetchall(cursor)
+        print comment_list2
+        comment_ids = set()
+        for comment in comment_list:
+            comment_ids.add(comment['f_id'])
+        for comment in comment_list2:
+            if comment['f_id'] not in comment_ids:
+                comment['score'] = 'None'
+                comment_list += [comment]
         for comment in comment_list:
             comment['date_ago'] = (datetime.now().date() - comment['f_date']).days
+
     context = {'product_list': row,
                'comment_list': comment_list,
                'sell_record': sell_record,

@@ -140,7 +140,7 @@
                 <div class="col-sm-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <strong>{{ comment.FeedbackUser }}</strong> <span class="text-muted">commented {{ comment.date_ago }} days ago</span>
+                            <strong>{{ comment.FeedbackUser }}</strong> <span class="text-muted">commented {{ comment.date_ago }} days ago &#9658; {{ comment.p_name }}</span>
                         </div>
                         <div class="panel-body">
                             {{ comment.f_content }}
@@ -148,7 +148,7 @@
                         <div class="panel-footer">
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <p>Average Rating: 0</p>
+                                        <p>Average Rating: {{ comment.score }}</p>
                                 </div>
                             </div>
                         </div>
