@@ -80,24 +80,38 @@ Our recommendation system takes every user's search history. Then for each searc
 ### 5. Product Page
 
 ### 6. Database Schema
-* User (Auth)
 
-* Product
++----------------------------+
+| Tables_in_platform         |
++----------------------------+
+| Feedback                   |
+| OrderRecord                |
+| Popular                    |
+| Product                    |
+| Rating                     |
+| Search_Record              |
+| User                       |
+| auth_group                 |
+| auth_group_permissions     |
+| auth_permission            |
+| auth_user                  |
+| auth_user_groups           |
+| auth_user_user_permissions |
+| django_admin_log           |
+| django_content_type        |
+| django_migrations          |
+| django_session             |
+| register_profile           |
++----------------------------+
 
-* OrderRecord
-
-* Search_Record
-
-* Feedback
-
-* Rating
-
-
-### 7. Raw SQL Query
+### 7. Advanced Raw SQL Query
 #### a. Statistics
 *	List of 5 most popular sellers (in terms of number of pending orders--the more people who wants to buy something from this seller, the more popular he/she is) 
 *	List of 5 most popular items
 * Average ratings for each given comment
+
+#### b. Trigger
+*   When a transaction is successfull, a trigger will check whether the product's quantity is reduced to 0, if it is, automatically decline other orders associated with this product
 
 ### 8. Demonstration on Functionalities
 #### Register
