@@ -104,9 +104,8 @@ Our recommendation system takes every user's search history. Then for each searc
 ### 6. Database Schema
 
 ![alt text](../master/ERD.png)
-[SQL DDL Code](https://github.com/Jiahui-Huang/DB-Project/blob/master/DB-SecondHand.sql)
+Database Schema: [DDL Code](https://github.com/Jiahui-Huang/DB-Project/blob/master/DB-SecondHand.sql)
 
-|----------------------------|
 | Tables_in_platform         |
 |----------------------------|
 | Feedback                   |
@@ -127,7 +126,6 @@ Our recommendation system takes every user's search history. Then for each searc
 | django_migrations          |
 | django_session             |
 | register_profile           |
-|----------------------------|
 
 ### 7. Advanced Raw SQL Query
 #### a. Statistics
