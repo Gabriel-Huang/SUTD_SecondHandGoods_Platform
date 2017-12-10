@@ -4,7 +4,7 @@ Working demo available at http://128.199.165.76:8000/homepage/
 
 
 ## Group Members:
-Huang Jiahui 10014 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 1001417 | Zhang Jiaxuan 10014
+Huang Jiahui 1001413 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 1001417 | Zhang Jiaxuan 1001420
 
 ## Project Proposal & Requirements
 ### 1. Topic:
@@ -31,9 +31,8 @@ Upon user demand, the full record of a user can be seen from the user profile pa
 9.	(5 pts) Useful feedback: Comments are displayed on a seller’s profile in the order of average usefulness score for feedbacks, highest on the top and lowest at the bottom.
 10.	(10 pts) Product recommendation: Due to the specialness of second-hand products, most products only have one piece. Therefore, it is not approperiate to recommand products based on user's order history. The reason is, at most circumstances, the product will be out of stock after one successful order. In this case, we will not recommand products by analysing users with similar purchasing preference. Instead, we look into the search history of every user and recommand products based on the similarity score between search keywords and products. Recommendation products will be sorted on decreasing relevance. 
 11.	(10 pts) Statistics: Every month we will provide the information of:
-- list of n most popular sellers (in terms of items sold in this month)
+- list of n most popular sellers (in terms of items sold overall)
 - the list of m most popular categories
-- the list of k most trutable users (They provided feedbacks with high usefulness score.)
 
 ## Environment Setup
 0. Database setup
@@ -91,7 +90,7 @@ The homepage for new users displays banners and top-sale products. New users can
 The homepage will recommand products to registered user as long as he/she has search history. 
 
 #### c. Search Function
-
+At homepage, users can search product by keyword regular expression match and use seller name, catrgory, date information to filter results. Also, users can sort the search results by price and product upload time. 
 
 ### 2. Recommendation Product
 Our recommendation system takes every user's search history. Then for each search history record, we find the top two most similar products among all products to recommend. The reason we find 2 products for each search history is that we are afraid that the data is not enough. Due to the limited space on homepage, we will only select n most frequent appeared product to recommend
@@ -105,10 +104,11 @@ Our recommendation system takes every user's search history. Then for each searc
 ### 6. Database Schema
 
 ![alt text](../master/ERD.png)
+[SQL DDL Code](https://github.com/Jiahui-Huang/DB-Project/blob/master/DB-SecondHand.sql)
 
-+----------------------------+
+|----------------------------|
 | Tables_in_platform         |
-+----------------------------+
+|----------------------------|
 | Feedback                   |
 | OrderRecord                |
 | Popular                    |
@@ -127,7 +127,7 @@ Our recommendation system takes every user's search history. Then for each searc
 | django_migrations          |
 | django_session             |
 | register_profile           |
-+----------------------------+
+|----------------------------|
 
 ### 7. Advanced Raw SQL Query
 #### a. Statistics
