@@ -81,6 +81,7 @@ Our recommendation system takes every user's search history. Then for each searc
 
 ### 6. Database Schema
 ![alt text](../master/DB Project ER diagram (1).png)
+
 +----------------------------+
 | Tables_in_platform         |
 +----------------------------+
