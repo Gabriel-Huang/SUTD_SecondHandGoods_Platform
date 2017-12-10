@@ -93,13 +93,16 @@ The homepage will recommand products to registered user as long as he/she has se
 At homepage, users can search product by keyword regular expression match and use seller name, catrgory, date information to filter results. Also, users can sort the search results by price and product upload time. 
 
 ### 2. Recommendation Product
-Our recommendation system takes every user's search history. Then for each search history record, we find the top two most similar products among all products to recommend. The reason we find 2 products for each search history is that we are afraid that the data is not enough. Due to the limited space on homepage, we will only select n most frequent appeared product to recommend
+Our recommendation system takes every user's search history as input. Then for each search history record, we find the top two most similar products among all products compared to the searched keyword and recommend them to the user. The reason we recommend 2 products for each search history is a result of the lack of data. In addition, due to the limited space on homepage, we will only select n most frequently appeared products to recommend(where n can be customized).
 
 ### 3. Register Page
+The registration page asks the user to input a unique user name and passwords that are not "too simple" (as required by Django).
 
 ### 4. Profile Page
+The profile page will display the profile photo, user name, selling records, purchase records, comments to product and ratings for comments.
 
 ### 5. Product Page
+The product page will display the details for a product, including name, price, quantity, description and seller etc.
 
 ### 6. Database Schema
 
