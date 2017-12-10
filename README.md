@@ -24,9 +24,9 @@ Upon user demand, the full record of a user can be seen from the user profile pa
         * his/her product list with selling status and record
         * Feedbacks he/she get from other users 
 
-6. (2.5) Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
-7. (2.5) Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 1, 2 ,3, 4 or 5)
-8. (20 pts)	Product browsing: Users can browse through items by selecting a specific category. A user can also specify that the results are to be sorted by price or average rating of the seller. We may also implement a keyword searching interface to make the search result more concrete.
+6. (2.5 pts) Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
+7. (2.5 pts) Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 1, 2 ,3, 4 or 5)
+8. (20 pts)	Product browsing: User may search for a product using search bar. Users can also browse through items by selecting a specific category, date range or seller's user name. A user can also specify that the results are to be sorted by price from low to high, price fron high to low or latest uploaded products. 
 9.	(5 pts) Useful feedback: Comments are displayed on a seller’s profile in the order of average usefulness score for feedbacks, highest on the top and lowest at the bottom.
 10.	(10 pts) Product recommendation: Due to the specialness of second-hand products, most products only have one piece. Therefore, it is not approperiate to recommand products based on user's order history. The reason is, at most circumstances, the product will be out of stock after one successful order. In this case, we will not recommand products by analysing users with similar purchasing preference. Instead, we look into the search history of every user and recommand products based on the similarity score between search keywords and products. Recommendation products will be sorted on decreasing relevance. 
 11.	(10 pts) Statistics: Every month we will provide the information of:
