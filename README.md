@@ -128,14 +128,13 @@ After you click `Sign Up`, you will be directed back to homepage and you can see
 
 ![alt text](../master/screenshots/3.png)
 
-You can search your interested product by entering the keyword into the search bar, clicking your interested category or scroll down to the product list below to find out more. You can apply filter to filter out the product lsit by the criteria you want.
+You can search your interested product by entering the keyword into the search bar, clicking your interested category or scroll down to the product list below to find out more. 
 
 ![alt text](../master/screenshots/23.png)
+
+After hitting `Enter` or clicking on the search button, you will see the products as the search results. The product name, seller name and product photo are shown on this page. Above the picture you can see the category it belongs to. You can click `Buy Now` if you are intending to buy this product. You can apply filter to filter out the product lsit by the criteria you want.
+
 ![alt text](../master/screenshots/24.png)
-
-After hitting `Enter` or clicking on the search button, you will see the products as the search results. The product name, seller name and product photo are shown on this page. Above the picture you can see the category it belongs to. You can click `Buy Now` if you are intending to buy this product.
-
-![alt text](../master/screenshots/6.png)
 
 You will be directed to the product information page, where you can see all the related information (name, seller, description, quantity available, category it belongs to, posting date and price) of the product in details. You can buy the product by clicking `Buy!!!`.
 
