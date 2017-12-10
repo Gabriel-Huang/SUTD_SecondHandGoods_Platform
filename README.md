@@ -80,7 +80,8 @@ Our recommendation system takes every user's search history. Then for each searc
 ### 5. Product Page
 
 ### 6. Database Schema
-![alt text](../master/DB Project ER diagram (1).png)
+
+![alt text](../master/ERD.png)
 
 +----------------------------+
 | Tables_in_platform         |
