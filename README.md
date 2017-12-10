@@ -36,7 +36,6 @@ Upon user demand, the full record of a user can be seen from the user profile pa
 - the list of k most trutable users (They provided feedbacks with high usefulness score.)
 
 ## Environment Setup
-Make sure you have the following installed
 0. Database setup
 ```
 CREATE DATABASE platform CHARACTER SET UTF8;
