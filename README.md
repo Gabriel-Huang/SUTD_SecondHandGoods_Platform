@@ -131,6 +131,7 @@ After you click `Sign Up`, you will be directed back to homepage and you can see
 You can search your interested product by entering the keyword into the search bar, clicking your interested category or scroll down to the product list below to find out more. 
 
 ![alt text](../master/screenshots/23.png)
+![alt text](../master/screenshots/5.png)
 
 After hitting `Enter` or clicking on the search button, you will see the products as the search results. The product name, seller name and product photo are shown on this page. Above the picture you can see the category it belongs to. You can click `Buy Now` if you are intending to buy this product. You can apply filter to filter out the product lsit by the criteria you want.
 
