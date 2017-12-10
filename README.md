@@ -1,5 +1,6 @@
 # DB-Project
 An online Second-hand goods trading platform for students in SUTD. A development of database-based system with Django.
+Working demo available at http://128.199.165.76:8000/homepage/ 
 
 
 ## Group Members:
@@ -36,6 +37,16 @@ Upon user demand, the full record of a user can be seen from the user profile pa
 
 ## Environment Setup
 Make sure you have the following installed
+0. Database setup
+```
+CREATE DATABASE platform CHARACTER SET UTF8;
+
+CREATE USER DBprojectUser@localhost IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON platform.* TO DBprojectUser@localhost;
+
+FLUSH PRIVILEGES;
+```
 1. virtualenv
 ```
 pip install virtualenv
@@ -49,13 +60,26 @@ sudo apt-get install libmysqlclient-dev
 ```
 virtualenv $environment_name
 ```
-activate the virtual environment by
+4. activate the virtual environment
 ```
 source path/to/env/folder/bin/activate
-```
-and go to your project directory and do
-```
+# install required packages
 pip install -r requirments.txt
+```
+5. Django basic setup
+```
+python manage.py makemigrations
+python manage.py makemigrations
+# create a superuser
+python manage.py createsuperuser
+```
+6. Load DB schema
+```
+source [project dir]/DB-SecondHand.sql
+```
+7. Run server
+```
+python manage.py runserver
 ```
 ## Basic Functionality
 A list of basic functionalities for our platfrom
