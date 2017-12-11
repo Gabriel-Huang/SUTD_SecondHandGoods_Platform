@@ -12,7 +12,7 @@ alter table auth_user add column profile_pic varchar(150) default '/media/defaul
 
 Create Table Product ( 	#added column category
 	p_id Integer,
-    sellerid varchar(150),
+    sellerid varchar(150) NOT NULL,
     p_name Char(100),
     p_quantity Integer,
     p_description Text(500),
@@ -26,12 +26,12 @@ Create Table Product ( 	#added column category
 
 Create Table OrderRecord (
 	o_id Integer,
-    productid integer Not Null,
+    productid integer NOT NULL,
     tradeinfo Text,
     trade_result integer,
     productseller varchar(150),
     o_quantity integer,
-    buyerid varchar (150),
+    buyerid varchar (150) NOT NULL,
     o_date Date,
     primary key (o_id),
     foreign key (productid, productseller) references Product(p_id, sellerid),
@@ -40,7 +40,7 @@ Create Table OrderRecord (
 
 Create Table Feedback (
 	f_id Integer,
-    FeedbackUser varchar (150),
+    FeedbackUser varchar (150) NOT NULL,
     Product Integer Not Null,
     Seller varchar(150),
     f_content Text(500),
@@ -57,7 +57,7 @@ Create Table Rating (
 	r_id Integer,
     r_score Integer check (r_score = 0 or r_score = 1 or r_score = 2),
     r_date Date,
-    RatingUser varchar(150),
+    RatingUser varchar(150) NOT NULL,
     FeedbackUser varchar(150),
     FeedbackProduct Integer Not Null,
     Feedback_id Integer,
@@ -69,7 +69,7 @@ Create Table Rating (
     Check (RaringUser <> FeedbackUser));
 
 Create Table Search_Record(
-	user varchar(150),
+	user varchar(150) NOT NULL,
     content varchar(300),
     time timestamp,
     Primary Key (user, content, time),
