@@ -39,9 +39,9 @@ Create Table OrderRecord (
 
 
 Create Table Feedback (
-	f_id Integer,
-    FeedbackUser varchar (150) NOT NULL,
-    Product Integer Not Null,
+	f_id Integer,					 		--there should be no fid due to Feedback is weak entity, instead, we can replace it
+    FeedbackUser varchar (150) NOT NULL,	--with candidte key like (timestamp, sellerid and buyerid), but we didnt manage to change it
+    Product Integer Not Null,				--because it leads to too many modifications in our code, we dont have enough time -_-#
     Seller varchar(150),
     f_content Text(500),
     f_score Integer check (0 <= f_score <= 10),
