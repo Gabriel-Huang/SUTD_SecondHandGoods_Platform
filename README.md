@@ -10,30 +10,6 @@ Huang Jiahui 1001413 | Joji James Anaghan | Su Qiulin 1001415 | Wu Lingyun 10014
 ### 1. Topic:
 Implementation of an online marketplace for buying and selling new and secondhand goods among SUTD. Create a web application with a database backend using Django that implements features described below. The server can run both on local machine and online.
 
-### 2. Features to be included (equivalent to the original topic):
-1. (5 pts) Registration: Login-name(unique), password. (Use Django’s auth mode and session DB module for this.)
-2. (5 pts) Ordering: After registration, a user can order items that are available on the platform. One user can only buy one product at one time.(Enable multiple copies, multiple times of ordering)
-4. (2 pts) Selling: After registration, a user can post his/her item onto the platform, with a specified name, price, quantity, category, and description.(One product has one category.)
-4. (3 pts) Seller can edit product Info: (Arrival of more copies) Most second hand products only has quantity of one. Still, sellers are able to modify the quantity of the item that they are selling after uploading the product. (Eg. School Concert ticket)
-3. (15 pts) User record: 
-Upon user demand, the full record of a user can be seen from the user profile page: 
-    1. his/her account information
-    2. his/her full history of orders (product name, seller name and order status)
-    3. his/her full history of feedbacks
-    4. the list of all the feedbacks he/she ranked with respect to usefulness
-    5. If the user is a seller:
-        * his/her product list with selling status and record
-        * Feedbacks he/she get from other users 
-
-6. (2.5 pts) Feedback recordings: Users can rate or leave a short comment on a seller’ public profile -> No changes are allowed; only one feedback per user per product is allowed.
-7. (2.5 pts) Comment ratings: users can access a seller’s public profile and rate a comment according to this seller (numerical score 1, 2 ,3, 4 or 5)
-8. (20 pts)	Product browsing: User may search for a product using search bar. Users can also browse through items by selecting a specific category, date range or seller's user name. A user can also specify that the results are to be sorted by price from low to high, price fron high to low or latest uploaded products. 
-9.	(5 pts) Useful feedback: Comments are displayed on a seller’s profile in the order of average usefulness score for feedbacks, highest on the top and lowest at the bottom.
-10.	(10 pts) Product recommendation: Due to the specialness of second-hand products, most products only have one piece. Therefore, it is not approperiate to recommand products based on user's order history. The reason is, at most circumstances, the product will be out of stock after one successful order. In this case, we will not recommand products by analysing users with similar purchasing preference. Instead, we look into the search history of every user and recommand products based on the similarity score between search keywords and products. Recommendation products will be sorted on decreasing relevance. 
-11.	(10 pts) Statistics: Every month we will provide the information of:
-- list of n most popular sellers (in terms of items sold overall)
-- the list of m most popular categories
-
 ## Environment Setup
 0. Database setup
 ```
